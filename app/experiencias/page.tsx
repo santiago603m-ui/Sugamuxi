@@ -1,0 +1,286 @@
+"use client";
+
+import { useState } from "react";
+import { ArrowRight, Compass, Camera, Wind, Zap, TreePine, Sunset } from "lucide-react";
+import Link from "next/link";
+
+const categories = [
+  { id: "all",         label: "Todas" },
+  { id: "aventura",   label: "Aventura" },
+  { id: "cultura",    label: "Cultura" },
+  { id: "gastronomia", label: "Gastronomía" },
+  { id: "naturaleza", label: "Naturaleza" },
+];
+
+const experiences = [
+  {
+    cat: "aventura",
+    icon: Compass,
+    title: "Senderismo al Páramo de Ocetá",
+    desc: "Recorre 14 km entre frailejones gigantes y lagunas de páramo a 3.800 msnm. Una experiencia mística en los Andes boyacenses.",
+    img: "https://images.unsplash.com/photo-1501786223405-6d024d7c3b8d?auto=format&fit=crop&q=80&w=800",
+    duration: "1 día",
+    difficulty: "Media-Alta",
+    price: "Desde $80.000",
+    color: "#1B5E3B",
+  },
+  {
+    cat: "cultura",
+    icon: Camera,
+    title: "Tour Colonial Monguí",
+    desc: "Calles empedradas, basílica franciscana del siglo XVII y el museo del balón. Historia viva en el pueblo más lindo de Boyacá.",
+    img: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&q=80&w=800",
+    duration: "Medio día",
+    difficulty: "Fácil",
+    price: "Desde $40.000",
+    color: "#C9963A",
+  },
+  {
+    cat: "naturaleza",
+    icon: TreePine,
+    title: "Kayak en el Lago de Tota",
+    desc: "El espejo de agua más alto de Colombia te recibe entre niebla y cielo abierto. Pesca artesanal y atardeceres únicos.",
+    img: "https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&q=80&w=800",
+    duration: "1 día",
+    difficulty: "Fácil",
+    price: "Desde $60.000",
+    color: "#2E8B57",
+  },
+  {
+    cat: "gastronomia",
+    icon: Zap,
+    title: "Ruta Gastronómica Boyacense",
+    desc: "Piquete boyacense, caldo de papa, chicha de maíz artesanal y mazorca asada. Un recorrido por los sabores ancestrales de la región.",
+    img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&q=80&w=800",
+    duration: "Tarde",
+    difficulty: "Fácil",
+    price: "Desde $55.000",
+    color: "#8B4513",
+  },
+  {
+    cat: "aventura",
+    icon: Wind,
+    title: "Parapente sobre los Andes",
+    desc: "Vuela desde las cimas de los Andes con vistas del Lago de Tota y el altiplano boyacense. Piloto biplace certificado.",
+    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800",
+    duration: "2 horas",
+    difficulty: "Media",
+    price: "Desde $180.000",
+    color: "#1565C0",
+  },
+  {
+    cat: "cultura",
+    icon: Camera,
+    title: "Taller de Tejido en Nobsa",
+    desc: "Aprende el arte del tejido de ruanas boyacenses con artesanos locales en Nobsa. Llévate tu propia creación a casa.",
+    img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800",
+    duration: "3 horas",
+    difficulty: "Fácil",
+    price: "Desde $45.000",
+    color: "#7B1FA2",
+  },
+  {
+    cat: "naturaleza",
+    icon: Sunset,
+    title: "Amanecer en las Termales de Iza",
+    desc: "Disfruta del amanecer en las aguas termales naturales. Un ritual de bienestar entre niebla y montaña a 2.900 msnm.",
+    img: "https://images.unsplash.com/photo-1582046467006-2531eec2534a?auto=format&fit=crop&q=80&w=800",
+    duration: "Mañana",
+    difficulty: "Fácil",
+    price: "Desde $35.000",
+    color: "#E65100",
+  },
+  {
+    cat: "aventura",
+    icon: Compass,
+    title: "Ciclomontañismo Andino",
+    desc: "Ruta en bicicleta de montaña por carreteras destapadas entre fincas, pueblos y quebradas de la provincia.",
+    img: "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&q=80&w=800",
+    duration: "1 día",
+    difficulty: "Alta",
+    price: "Desde $90.000",
+    color: "#2E8B57",
+  },
+];
+
+export default function Experiencias() {
+  const [active, setActive] = useState("all");
+
+  const filtered = active === "all" ? experiences : experiences.filter(e => e.cat === active);
+
+  return (
+    <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
+
+      {/* Header */}
+      <section style={{
+        position: "relative",
+        height: 400,
+        overflow: "hidden",
+      }}>
+        <img
+          src="https://images.unsplash.com/photo-1501786223405-6d024d7c3b8d?auto=format&fit=crop&q=80&w=2000"
+          alt="Experiencias en Sugamuxi"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+        <div className="hero-overlay" />
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          textAlign: "center",
+        }}>
+          <div className="section-label" style={{ justifyContent: "center" }}>Qué hacer en Sugamuxi</div>
+          <h1 style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "clamp(38px, 6vw, 72px)",
+            fontWeight: 900,
+            color: "#fff",
+            lineHeight: 1.1,
+          }}>
+            Experiencias Únicas
+          </h1>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", maxWidth: 480, marginTop: 16 }}>
+            Aventura, cultura, gastronomía y naturaleza en un solo destino andino.
+          </p>
+        </div>
+      </section>
+
+      {/* Filter tabs */}
+      <div style={{
+        background: "#fff",
+        borderBottom: "1px solid var(--color-gray-200)",
+        position: "sticky",
+        top: "var(--nav-height)",
+        zIndex: 100,
+      }}>
+        <div className="container-wide" style={{
+          display: "flex",
+          gap: 4,
+          padding: "12px 32px",
+          overflowX: "auto",
+        }}>
+          {categories.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              style={{
+                padding: "8px 20px",
+                borderRadius: "var(--radius-full)",
+                border: "1.5px solid",
+                borderColor: active === cat.id ? "var(--color-primary)" : "var(--color-gray-200)",
+                background: active === cat.id ? "var(--color-primary)" : "transparent",
+                color: active === cat.id ? "#fff" : "var(--color-text-light)",
+                fontSize: 13,
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                transition: "all var(--transition)",
+                cursor: "pointer",
+              }}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Grid */}
+      <section style={{ padding: "64px 0", background: "var(--color-gray-50)" }}>
+        <div className="container-wide">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gap: 28,
+          }}>
+            {filtered.map(({ icon: Icon, title, desc, img, duration, difficulty, price, color }, i) => (
+              <div
+                key={title}
+                className="card"
+                style={{ animationDelay: `${i * 0.08}s` }}
+              >
+                <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+                  <img src={img} alt={title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.transform = "scale(1)"}
+                  />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%)"
+                  }} />
+                  <div style={{
+                    position: "absolute", top: 14, left: 14,
+                    width: 40, height: 40,
+                    background: color,
+                    borderRadius: "10px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <Icon size={20} color="#fff" />
+                  </div>
+                </div>
+
+                <div style={{ padding: "20px 22px 22px" }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--color-dark)", marginBottom: 10, lineHeight: 1.3 }}>{title}</h3>
+                  <p style={{ fontSize: 13, color: "var(--color-text-light)", lineHeight: 1.65, marginBottom: 20 }}>{desc}</p>
+
+                  <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
+                    {[
+                      { label: `⏱ ${duration}` },
+                      { label: `🏃 ${difficulty}` },
+                    ].map(({ label }) => (
+                      <span key={label} style={{
+                        fontSize: 11, fontWeight: 600,
+                        padding: "4px 10px",
+                        background: "var(--color-gray-100)",
+                        borderRadius: "var(--radius-full)",
+                        color: "var(--color-text)",
+                      }}>
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: "1px solid var(--color-gray-200)" }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color }}>
+                      {price}
+                    </span>
+                    <button style={{
+                      display: "flex", alignItems: "center", gap: 6,
+                      padding: "8px 16px",
+                      background: color,
+                      color: "#fff",
+                      borderRadius: "var(--radius-full)",
+                      fontSize: 12,
+                      fontWeight: 700,
+                      border: "none",
+                      cursor: "pointer",
+                      transition: "opacity 0.2s ease",
+                    }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = "0.85"}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = "1"}
+                    >
+                      Reservar <ArrowRight size={12} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{ padding: "64px 0", background: "var(--color-dark)", textAlign: "center" }}>
+        <div className="container">
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
+            ¿Quieres una experiencia personalizada?
+          </h2>
+          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.6)", marginBottom: 32 }}>
+            Diseñamos itinerarios a la medida de tu grupo y presupuesto.
+          </p>
+          <Link href="/contacto" className="btn btn-gold">
+            Contáctanos <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
