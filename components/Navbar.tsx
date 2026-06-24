@@ -3,196 +3,347 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Mountain } from "lucide-react";
+import { MapPin, Menu, X } from "lucide-react";
 
-const navLinks = [
-  { label: "Inicio",        href: "/" },
-  { label: "Destinos",      href: "/destinos" },
-  { label: "Experiencias",  href: "/experiencias" },
-  { label: "Cultura",       href: "/cultura" },
-  { label: "Contacto",      href: "/contacto" },
+const navItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Destinos", href: "/destinos" },
+  { label: "Experiencias", href: "/experiencias" },
+  { label: "Cultura", href: "/cultura" },
 ];
 
 export default function Navbar() {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isDarkBg, setIsDarkBg] = useState(true);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
-  // Close menu on route change
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    const handleScroll = () => {
+      // El centro vertical del navbar (top 20px + mitad de 72px = 56px)
+      const x = window.innerWidth / 2;
+      const y = 56;
+      
+      // Usamos elementsFromPoint para ver exactamente qué hay debajo del navbar en tiempo real
+      const elements = document.elementsFromPoint(x, y);
+      
+      let detectedDark = false;
+      let detectedSolidBg = false;
 
-  const isHome = pathname === "/";
+      for (const el of elements) {
+        // Ignorar la propia navbar para que no se lea a sí misma
+        if (el.tagName === 'HEADER' || el.closest('header')) continue;
+
+        const style = window.getComputedStyle(el);
+        const bgColor = style.backgroundColor;
+        const bgImage = style.backgroundImage;
+
+        // Analizar el color de fondo si es sólido
+        if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+          const match = bgColor.match(/\d+/g);
+          if (match && match.length >= 3) {
+            const [r, g, b] = match.map(Number);
+            // Fórmula de brillo percibido (HSP)
+            const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+            
+            // Si el brillo es menor a 140, es oscuro. Si no, es claro.
+            detectedDark = hsp < 140;
+            detectedSolidBg = true;
+            break;
+          }
+        }
+
+        // Si tiene un overlay explícito de este proyecto
+        if (el.classList.contains('hero-overlay')) {
+          detectedDark = true;
+          detectedSolidBg = true;
+          break;
+        }
+
+        // Si hay una imagen o gradiente, asumimos que es el hero oscuro (heurística del proyecto)
+        if (bgImage && bgImage !== 'none' && (bgImage.includes('linear-gradient') || bgImage.includes('radial-gradient'))) {
+          detectedDark = true;
+          detectedSolidBg = true;
+          break;
+        }
+      }
+
+      // Si detectó un fondo sólido, actualizamos el estado. Si no, fallback al top de la página.
+      if (detectedSolidBg) {
+        setIsDarkBg(detectedDark);
+      } else {
+        // Por defecto el body de Next.js suele ser blanco/claro
+        setIsDarkBg(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
+
+  const handleNavClick = () => setMenuOpen(false);
+
+  // Colores dinámicos dependiendo del fondo
+  const textColor = isDarkBg ? "#fff" : "#000"; // Negro puro para fondos blancos
+  const textMuted = isDarkBg ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.65)";
+  const bgActive = isDarkBg ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.04)";
+  const bgHover = isDarkBg ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)";
 
   return (
     <>
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          height: "var(--nav-height)",
-          display: "flex",
-          alignItems: "center",
-          transition: "background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease",
-          background: scrolled
-            ? "rgba(15, 26, 20, 0.96)"
-            : isHome
-            ? "transparent"
-            : "rgba(15, 26, 20, 0.96)",
-          backdropFilter: scrolled || !isHome ? "blur(20px)" : "none",
-          boxShadow: scrolled || !isHome ? "0 2px 32px rgba(0,0,0,0.25)" : "none",
-          borderBottom: scrolled || !isHome ? "1px solid rgba(255,255,255,0.08)" : "none",
-        }}
-      >
-        <div className="container-wide" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+      <header style={{
+        position: "fixed",
+        top: 20,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "92%",
+        maxWidth: 1200,
+        zIndex: 1000,
+        height: 72,
+        borderRadius: 24,
+        display: "flex",
+        alignItems: "center",
+        padding: "0 32px",
+        background: "transparent",
+        backdropFilter: "blur(20px) saturate(150%)",
+        WebkitBackdropFilter: "blur(20px) saturate(150%)",
+        border: "none",
+        boxShadow: "none",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
 
-          {/* Logo */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{
-              width: 40, height: 40,
-              background: "linear-gradient(135deg, var(--color-primary), var(--color-primary-xl))",
-              borderRadius: "10px",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 4px 16px rgba(27,94,59,0.5)"
+          <Link href="/" style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            textDecoration: "none"
+          }}>
+            <MapPin size={22} color="var(--color-gold)" strokeWidth={2.5} />
+            <span style={{
+              fontSize: 20,
+              fontWeight: 800,
+              color: textColor,
+              letterSpacing: "-0.5px",
+              fontFamily: "var(--font-serif)",
+              transition: "color 0.3s ease",
             }}>
-              <Mountain size={22} color="#fff" />
-            </div>
-            <div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", lineHeight: 1, letterSpacing: "-0.02em" }}>Sugamuxi</div>
-              <div style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.55)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Provincia · Boyacá</div>
-            </div>
+              Sugamuxi
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav style={{ display: "flex", alignItems: "center", gap: 4 }} className="nav-desktop">
-            {navLinks.map(link => {
-              const active = pathname === link.href;
+          <nav style={{ display: "flex", gap: 8, alignItems: "center" }} className="nav-desktop">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
               return (
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  key={item.label}
+                  href={item.href}
                   style={{
-                    position: "relative",
+                    color: active ? textColor : textMuted,
                     padding: "8px 16px",
                     fontSize: 14,
-                    fontWeight: active ? 700 : 500,
-                    color: active ? "#fff" : "rgba(255,255,255,0.75)",
-                    borderRadius: "var(--radius-full)",
-                    transition: "all var(--transition)",
-                    background: active ? "rgba(255,255,255,0.12)" : "transparent",
-                    letterSpacing: "0.01em",
+                    fontWeight: active ? 600 : 500,
+                    transition: "all 0.3s",
+                    background: active ? bgActive : "transparent",
+                    borderRadius: 12,
+                    textDecoration: "none",
+                    position: "relative",
                   }}
-                  onMouseEnter={e => {
-                    if (!active) (e.currentTarget as HTMLElement).style.color = "#fff";
-                    if (!active) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.color = textColor;
+                      e.currentTarget.style.background = bgHover;
+                    }
                   }}
-                  onMouseLeave={e => {
-                    if (!active) (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.75)";
-                    if (!active) (e.currentTarget as HTMLElement).style.background = "transparent";
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.color = textMuted;
+                      e.currentTarget.style.background = "transparent";
+                    }
                   }}
                 >
-                  {link.label}
+                  {item.label}
                   {active && (
                     <span style={{
                       position: "absolute",
-                      bottom: 2,
+                      bottom: 4,
                       left: "50%",
                       transform: "translateX(-50%)",
-                      width: 20,
-                      height: 2,
+                      width: 4,
+                      height: 4,
+                      borderRadius: "50%",
                       background: "var(--color-gold)",
-                      borderRadius: 2,
                     }} />
                   )}
                 </Link>
               );
             })}
 
-            <Link
-              href="/contacto"
-              className="btn btn-gold"
-              style={{ marginLeft: 12, padding: "10px 22px", fontSize: 13 }}
+            <Link href="/contacto" style={{
+              background: "var(--color-gold)",
+              color: "#000",
+              padding: "10px 22px",
+              borderRadius: 50,
+              fontSize: 14,
+              fontWeight: 600,
+              marginLeft: 16,
+              textDecoration: "none",
+              transition: "all 0.3s ease",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
+            }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.transform = "translateY(-1px)";
+                e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--color-gold)";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 14px rgba(0,0,0,0.2)";
+              }}
             >
               Planifica tu viaje
             </Link>
           </nav>
 
-          {/* Mobile Hamburger */}
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setMenuOpen(true)}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: textColor,
+              cursor: "pointer",
+              padding: 8,
+              transition: "color 0.3s ease",
+            }}
             className="nav-mobile-btn"
-            style={{ color: "#fff", padding: 8 }}
+            aria-label="Abrir menú"
           >
-            {menuOpen ? <X size={26} /> : <Menu size={26} />}
+            <Menu size={28} />
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu */}
-      <div
-        style={{
+      {menuOpen && (
+        <div style={{
           position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 999,
-          background: "var(--color-dark)",
+          inset: 0,
+          background: "rgba(0, 0, 0, 0.3)",
+          backdropFilter: "blur(30px) saturate(150%)",
+          WebkitBackdropFilter: "blur(30px) saturate(150%)",
+          zIndex: 1001,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 32,
-          transition: "opacity 0.3s ease, transform 0.3s ease",
-          opacity: menuOpen ? 1 : 0,
-          transform: menuOpen ? "translateY(0)" : "translateY(-100%)",
-          pointerEvents: menuOpen ? "auto" : "none",
-        }}
-      >
-        <button
-          onClick={() => setMenuOpen(false)}
-          style={{ position: "absolute", top: 24, right: 24, color: "#fff", padding: 8 }}
-        >
-          <X size={28} />
-        </button>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <Mountain size={28} color="var(--color-gold)" />
-          <span style={{ fontSize: 22, fontWeight: 800, color: "#fff" }}>Sugamuxi</span>
-        </div>
-
-        {navLinks.map(link => (
-          <Link
-            key={link.href}
-            href={link.href}
+          gap: 8,
+          animation: "fadeIn 0.3s ease",
+        }}>
+          <button
+            onClick={() => setMenuOpen(false)}
             style={{
-              fontSize: 28,
+              position: "absolute",
+              top: 24,
+              right: 24,
+              background: "transparent",
+              border: "none",
+              color: "#fff",
+              cursor: "pointer",
+              padding: 8,
+            }}
+            aria-label="Cerrar menú"
+          >
+            <X size={32} />
+          </button>
+
+          <div style={{
+            position: "absolute",
+            top: 24,
+            left: 24,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}>
+            <MapPin size={22} color="var(--color-gold)" strokeWidth={2.5} />
+            <span style={{
+              fontSize: 20,
+              fontWeight: 800,
+              color: "#fff",
+              letterSpacing: "-0.5px",
+              fontFamily: "var(--font-serif)",
+            }}>
+              Sugamuxi
+            </span>
+          </div>
+
+          {navItems.map((item, i) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={handleNavClick}
+                style={{
+                  color: active ? "var(--color-gold)" : "#fff",
+                  fontSize: 32,
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  fontFamily: "var(--font-serif)",
+                  padding: "12px 24px",
+                  opacity: 0,
+                  animation: `slideUp 0.4s ease ${i * 0.08}s forwards`,
+                  position: "relative",
+                }}
+              >
+                {item.label}
+                {active && (
+                  <span style={{
+                    position: "absolute",
+                    bottom: 8,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: 40,
+                    height: 2,
+                    background: "var(--color-gold)",
+                    borderRadius: 1,
+                  }} />
+                )}
+              </Link>
+            );
+          })}
+
+          <Link
+            href="/contacto"
+            onClick={handleNavClick}
+            style={{
+              marginTop: 24,
+              background: "var(--color-gold)",
+              color: "#000",
+              padding: "14px 32px",
+              borderRadius: 50,
+              fontSize: 16,
               fontWeight: 700,
-              color: pathname === link.href ? "var(--color-gold)" : "rgba(255,255,255,0.85)",
-              letterSpacing: "-0.02em",
-              transition: "color 0.2s ease",
+              textDecoration: "none",
+              opacity: 0,
+              animation: "slideUp 0.4s ease 0.4s forwards",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
             }}
           >
-            {link.label}
+            Planifica tu viaje
           </Link>
-        ))}
-
-        <Link
-          href="/contacto"
-          className="btn btn-primary"
-          style={{ marginTop: 16 }}
-        >
-          Planifica tu viaje
-        </Link>
-      </div>
+        </div>
+      )}
     </>
   );
 }

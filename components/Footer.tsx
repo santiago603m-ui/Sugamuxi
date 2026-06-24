@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Mountain, Facebook, Instagram, Youtube, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 
@@ -43,18 +45,18 @@ export default function Footer() {
                 color: "rgba(255,255,255,0.5)",
                 transition: "all 0.2s ease",
               }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = "var(--color-primary)";
-                el.style.borderColor = "var(--color-primary)";
-                el.style.color = "#fff";
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = "transparent";
-                el.style.borderColor = "rgba(255,255,255,0.12)";
-                el.style.color = "rgba(255,255,255,0.5)";
-              }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = "var(--color-primary)";
+                  el.style.borderColor = "var(--color-primary)";
+                  el.style.color = "#fff";
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = "transparent";
+                  el.style.borderColor = "rgba(255,255,255,0.12)";
+                  el.style.color = "rgba(255,255,255,0.5)";
+                }}
               >
                 <Icon size={16} />
               </a>
@@ -67,11 +69,11 @@ export default function Footer() {
           <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 20, fontSize: 14, letterSpacing: "0.06em", textTransform: "uppercase" }}>Explorar</h4>
           <ul style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
-              { label: "Inicio",        href: "/" },
-              { label: "Destinos",      href: "/destinos" },
-              { label: "Experiencias",  href: "/experiencias" },
-              { label: "Cultura",       href: "/cultura" },
-              { label: "Contacto",      href: "/contacto" },
+              { label: "Inicio", href: "/" },
+              { label: "Destinos", href: "/destinos" },
+              { label: "Experiencias", href: "/experiencias" },
+              { label: "Cultura", href: "/cultura" },
+              { label: "Contacto", href: "/contacto" },
             ].map(l => (
               <li key={l.href}>
                 <Link href={l.href} style={{
@@ -82,8 +84,8 @@ export default function Footer() {
                   gap: 8,
                   transition: "color 0.2s ease",
                 }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
                 >
                   <ArrowRight size={12} />
                   {l.label}
@@ -107,8 +109,8 @@ export default function Footer() {
                   gap: 8,
                   transition: "color 0.2s ease",
                 }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
                 >
                   <MapPin size={12} />
                   {m}
@@ -125,7 +127,7 @@ export default function Footer() {
             {[
               { Icon: MapPin, text: "Sogamoso, Boyacá, Colombia" },
               { Icon: Phone, text: "+57 (8) 770 0000" },
-              { Icon: Mail,  text: "info@sugamuxi.gov.co" },
+              { Icon: Mail, text: "info@sugamuxi.gov.co" },
             ].map(({ Icon, text }) => (
               <div key={text} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                 <div style={{

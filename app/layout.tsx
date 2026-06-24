@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import NavbarScrim from "@/components/NavbarScrim";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+          <NavbarScrim />
           <Navbar />
           <main style={{ flex: 1 }}>{children}</main>
           <Footer />
