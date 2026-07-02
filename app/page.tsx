@@ -84,6 +84,115 @@ function StatItem({ icon: Icon, value, label }: { icon: typeof Star; value: stri
   );
 }
 
+function HighlightCard({ dest, index }: { dest: any, index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <Link href={`/destinos/${dest.slug}`} style={{ textDecoration: "none", display: "block" }}>
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          animationDelay: `${index * 0.1}s`,
+          borderRadius: "24px",
+          background: "#fff",
+          overflow: "hidden",
+          position: "relative",
+          boxShadow: isHovered 
+            ? `0 24px 50px -12px ${dest.color}40, 0 0 0 1px ${dest.color}20` 
+            : "0 10px 30px -10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)",
+          transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+          transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+        className="card-2010"
+      >
+        <div style={{ position: "relative", height: 280, overflow: "hidden" }}>
+          <img
+            src={dest.img}
+            alt={dest.name}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: isHovered ? "scale(1.12)" : "scale(1.02)",
+              transition: "transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)",
+            }}
+          />
+          <div style={{
+            position: "absolute",
+            inset: 0,
+            background: isHovered 
+              ? "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)"
+              : "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)",
+            transition: "background 0.5s ease"
+          }} />
+          
+          {/* Badge */}
+          <div style={{
+            position: "absolute", top: 20, left: 20, zIndex: 2,
+          }}>
+            <span style={{
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: "#fff",
+              padding: "6px 14px",
+              borderRadius: "999px",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            }}>
+              {dest.tag}
+            </span>
+          </div>
+
+          <div style={{
+            position: "absolute",
+            bottom: 20,
+            left: 20,
+            right: 20,
+            zIndex: 2,
+            transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+            transition: "transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+          }}>
+            <h3 style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 28,
+              fontWeight: 800,
+              color: "#fff",
+              lineHeight: 1.1,
+              textShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            }}>
+              {dest.name}
+            </h3>
+          </div>
+        </div>
+        
+        <div style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#fff" }}>
+          <span style={{ fontSize: 14, fontWeight: 600, color: isHovered ? dest.color : "#6B7280", transition: "color 0.3s ease" }}>
+            Explorar municipio
+          </span>
+          <div style={{
+            width: 36, height: 36,
+            background: isHovered ? dest.color : "#F3F4F6",
+            borderRadius: "50%",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            transform: isHovered ? "scale(1.1)" : "scale(1)",
+            transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+          }}>
+            <ArrowRight size={16} color={isHovered ? "#fff" : dest.color} />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function Home() {
   const heroImg = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2400";
 
@@ -193,7 +302,7 @@ export default function Home() {
               Donde los Andes guardan los secretos más hermosos de Colombia
             </p>
 
-            <div style={{
+            <div className="hero-btn-group" style={{
               display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap",
             }}>
               <Link
@@ -234,7 +343,7 @@ export default function Home() {
           STATS BAR
       ══════════════════════════════════════════════════ */}
       <section style={{ background: "var(--color-primary)", padding: "32px 0" }}>
-        <div className="container-wide" style={{
+        <div className="container-wide stats-grid" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
           gap: 24,
@@ -249,7 +358,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           DESTINOS HIGHLIGHTS
       ══════════════════════════════════════════════════ */}
-      <section style={{ padding: "100px 0", background: "var(--color-gray-50)" }}>
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-gray-50)" }}>
         <div className="container-wide">
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <div className="section-label" style={{ justifyContent: "center" }}>Nuestros destinos</div>
@@ -265,93 +374,13 @@ export default function Home() {
             </h2>
           </div>
 
-          <div style={{
+          <div className="destinos-grid" style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: 24,
           }}>
             {highlights.map((dest, i) => (
-              <Link
-                key={dest.name}
-                href={`/destinos/${dest.slug}`}
-                style={{ textDecoration: "none", display: "block" }}
-              >
-                <div
-                  className="card"
-                  style={{
-                    animationDelay: `${i * 0.1}s`,
-                    transition: "transform 0.4s ease, box-shadow 0.4s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px)";
-                    e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.12)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  <div style={{ position: "relative", height: 240, overflow: "hidden", borderRadius: "var(--radius-lg) var(--radius-lg) 0 0" }}>
-                    <img
-                      src={dest.img}
-                      alt={dest.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        transition: "transform 0.6s ease"
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.transform = "scale(1.08)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-                      }}
-                    />
-                    <div style={{
-                      position: "absolute", inset: 0,
-                      background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%)",
-                    }} />
-                    <div style={{
-                      position: "absolute",
-                      top: 14, left: 14,
-                      background: "rgba(255,255,255,0.15)",
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      borderRadius: "var(--radius-full)",
-                      padding: "4px 12px",
-                      fontSize: 11,
-                      fontWeight: 600,
-                      color: "#fff",
-                      letterSpacing: "0.08em",
-                    }}>
-                      {dest.tag}
-                    </div>
-                    <h3 style={{
-                      position: "absolute",
-                      bottom: 16, left: 16,
-                      fontFamily: "var(--font-serif)",
-                      fontSize: 24,
-                      fontWeight: 700,
-                      color: "#fff",
-                    }}>
-                      {dest.name}
-                    </h3>
-                  </div>
-                  <div style={{ padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: 13, color: "var(--color-text-light)" }}>Explorar municipio</span>
-                    <div style={{
-                      width: 32, height: 32,
-                      background: dest.color,
-                      borderRadius: "50%",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      transition: "transform 0.3s ease",
-                    }}>
-                      <ArrowRight size={14} color="#fff" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
+              <HighlightCard key={dest.name} dest={dest} index={i} />
             ))}
           </div>
 
@@ -518,7 +547,7 @@ export default function Home() {
             border: "1px solid rgba(255,255,255,0.08)",
             boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
           }}>
-            <div style={{
+            <div className="map-placeholder" style={{
               height: 320,
               background: "linear-gradient(135deg, #1a2f1e 0%, #0d1f14 30%, #1B3A25 60%, #0d1f14 100%)",
               position: "relative",
@@ -589,7 +618,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           EXPERIENCES PREVIEW
       ══════════════════════════════════════════════════ */}
-      <section style={{ padding: "100px 0", background: "var(--color-white)" }}>
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-white)" }}>
         <div className="container-wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 64, flexWrap: "wrap", gap: 24 }}>
             <div>
@@ -618,7 +647,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
+          <div className="exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
             {experiences.map(({ icon: Icon, title, desc, color }, i) => (
               <div
                 key={title}
@@ -667,7 +696,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════════════════ */}
-      <section style={{
+      <section className="section-reduce-pad" style={{
         position: "relative",
         overflow: "hidden",
         padding: "80px 0",
@@ -698,7 +727,7 @@ export default function Home() {
           <p style={{ fontSize: 17, color: "rgba(255,255,255,0.7)", marginBottom: 40 }}>
             Conecta con guías locales y vive experiencias auténticas
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="hero-btn-group" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
               href="/contacto"
               className="btn btn-gold"

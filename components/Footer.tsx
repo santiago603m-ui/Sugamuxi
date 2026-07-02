@@ -150,7 +150,7 @@ export default function Footer() {
         borderTop: "1px solid rgba(255,255,255,0.07)",
         padding: "20px 0",
       }}>
-        <div className="container-wide" style={{
+        <div className="container-wide footer-bottom" style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",

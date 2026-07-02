@@ -89,7 +89,7 @@ export default function Contacto() {
           </div>
 
           {/* Form */}
-          <div style={{
+          <div className="contact-form-box" style={{
             background: "#fff",
             padding: 48,
             borderRadius: "var(--radius-xl)",
@@ -116,7 +116,7 @@ export default function Contacto() {
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+              <div className="contact-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Email</label>
                   <input

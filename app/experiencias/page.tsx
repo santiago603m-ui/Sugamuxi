@@ -15,7 +15,7 @@ export default function Experiencias() {
     <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
 
       {/* Header */}
-      <section style={{
+      <section className="page-header-sm" style={{
         position: "relative",
         height: 400,
         overflow: "hidden",
@@ -55,7 +55,7 @@ export default function Experiencias() {
         top: "var(--nav-height)",
         zIndex: 100,
       }}>
-        <div className="container-wide" style={{
+        <div className="container-wide filter-tabs" style={{
           display: "flex",
           gap: 4,
           padding: "12px 32px",
@@ -88,9 +88,9 @@ export default function Experiencias() {
       {/* Grid */}
       <section style={{ padding: "64px 0", background: "var(--color-gray-50)" }}>
         <div className="container-wide">
-          <div style={{
+          <div className="exp-grid" style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
             gap: 28,
           }}>
             {filtered.map(({ icon: Icon, title, desc, img, duration, difficulty, price, color }, i) => (

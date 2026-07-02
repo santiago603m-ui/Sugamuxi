@@ -10,7 +10,7 @@ export default function Cultura() {
     <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
 
       {/* Header */}
-      <section style={{
+      <section className="page-header-md" style={{
         position: "relative",
         height: 480,
         overflow: "hidden",
@@ -62,6 +62,7 @@ export default function Cultura() {
               <img
                 src={sec.img}
                 alt={sec.title}
+                className="culture-img"
                 style={{ width: "100%", height: 380, objectFit: "cover" }}
               />
             </div>
@@ -123,7 +124,7 @@ export default function Cultura() {
 
           <div style={{ position: "relative" }}>
             {/* Line */}
-            <div style={{
+            <div className="timeline-line" style={{
               position: "absolute",
               left: "50%",
               top: 0, bottom: 0,
@@ -135,6 +136,7 @@ export default function Cultura() {
             {timeline.map((item, i) => (
               <div
                 key={item.year}
+                className="timeline-item"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -142,15 +144,16 @@ export default function Cultura() {
                   marginBottom: 48,
                   flexDirection: i % 2 === 0 ? "row" : "row-reverse",
                   textAlign: i % 2 === 0 ? "right" : "left",
+                  position: "relative",
                 }}
               >
-                <div style={{ flex: 1, padding: i % 2 === 0 ? "0 32px 0 0" : "0 0 0 32px" }}>
+                <div className="timeline-content" style={{ flex: 1, padding: i % 2 === 0 ? "0 32px 0 0" : "0 0 0 32px" }}>
                   <span style={{ fontSize: 13, fontWeight: 700, color: item.color, letterSpacing: "0.1em" }}>{item.year}</span>
                   <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", margin: "6px 0" }}>{item.title}</h3>
                   <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.65 }}>{item.desc}</p>
                 </div>
 
-                <div style={{
+                <div className="timeline-dot" style={{
                   width: 16, height: 16,
                   borderRadius: "50%",
                   background: item.color,
@@ -160,7 +163,7 @@ export default function Cultura() {
                   zIndex: 1,
                 }} />
 
-                <div style={{ flex: 1 }} />
+                <div className="timeline-spacer" style={{ flex: 1 }} />
               </div>
             ))}
           </div>
