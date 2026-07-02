@@ -17,6 +17,7 @@ export interface Highlight {
   tag: string;
   img: string;
   color: string;
+  desc: string;
 }
 
 export interface Category {
@@ -41,6 +42,7 @@ export interface HomeExperience {
   title: string;
   desc: string;
   color: string;
+  img: string;
 }
 
 export interface CultureSection {

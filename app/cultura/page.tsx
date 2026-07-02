@@ -107,7 +107,7 @@ export default function Cultura() {
                 (e.currentTarget as HTMLElement).style.color = sec.color;
               }}
               >
-                Conocer más <ArrowRight size={14} />
+                Conocer más
               </button>
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function Cultura() {
             Tours culturales guiados por historiadores y líderes comunitarios locales.
           </p>
           <Link href="/contacto" className="btn btn-gold">
-            Planifica tu viaje cultural <ArrowRight size={16} />
+            Planifica tu viaje cultural
           </Link>
         </div>
       </section>

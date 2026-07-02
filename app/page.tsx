@@ -86,7 +86,7 @@ function StatItem({ icon: Icon, value, label }: { icon: typeof Star; value: stri
 
 function HighlightCard({ dest, index }: { dest: any, index: number }) {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   return (
     <Link href={`/destinos/${dest.slug}`} style={{ textDecoration: "none", display: "block" }}>
       <div
@@ -98,8 +98,8 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
           background: "#fff",
           overflow: "hidden",
           position: "relative",
-          boxShadow: isHovered 
-            ? `0 24px 50px -12px ${dest.color}40, 0 0 0 1px ${dest.color}20` 
+          boxShadow: isHovered
+            ? `0 24px 50px -12px ${dest.color}40, 0 0 0 1px ${dest.color}20`
             : "0 10px 30px -10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)",
           transform: isHovered ? "translateY(-8px)" : "translateY(0)",
           transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
@@ -123,12 +123,12 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
           <div style={{
             position: "absolute",
             inset: 0,
-            background: isHovered 
+            background: isHovered
               ? "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)"
               : "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)",
             transition: "background 0.5s ease"
           }} />
-          
+
           {/* Badge */}
           <div style={{
             position: "absolute", top: 20, left: 20, zIndex: 2,
@@ -172,24 +172,98 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
             </h3>
           </div>
         </div>
-        
-        <div style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#fff" }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: isHovered ? dest.color : "#6B7280", transition: "color 0.3s ease" }}>
-            Explorar municipio
-          </span>
-          <div style={{
-            width: 36, height: 36,
-            background: isHovered ? dest.color : "#F3F4F6",
-            borderRadius: "50%",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            transform: isHovered ? "scale(1.1)" : "scale(1)",
-            transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+
+        <div style={{ padding: "20px 24px", background: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", minHeight: 90 }}>
+          <p style={{
+            fontSize: 14,
+            lineHeight: 1.5,
+            color: isHovered ? dest.color : "#4B5563",
+            margin: 0,
+            transition: "color 0.3s ease",
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
           }}>
-            <ArrowRight size={16} color={isHovered ? "#fff" : dest.color} />
-          </div>
+            {dest.desc}
+          </p>
         </div>
       </div>
     </Link>
+  );
+}
+
+const topLugares = [
+  { name: "Playa Blanca", loc: "Lago de Tota", img: "https://images.unsplash.com/photo-1579607147771-33157e335293?auto=format&fit=crop&q=80&w=1200", color: "#2E8B57" },
+  { name: "Parque Guatika", loc: "Tibasosa", img: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=1200", color: "#C9963A" },
+  { name: "Páramo de Ocetá", loc: "Monguí", img: "https://images.unsplash.com/photo-1549645938-34863f683bb5?auto=format&fit=crop&q=80&w=1200", color: "#1B5E3B" },
+  { name: "Páramo de Siscunsí", loc: "Mongua / Sogamoso", img: "https://images.unsplash.com/photo-1498307833015-e7b400441eb8?auto=format&fit=crop&q=80&w=1200", color: "#4C6B8B" },
+];
+
+function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        position: "relative",
+        height: 440,
+        borderRadius: "var(--radius-xl)",
+        overflow: "hidden",
+        animationDelay: `${index * 0.15}s`,
+        cursor: "pointer",
+        boxShadow: isHovered ? `0 30px 60px -15px ${lugar.color}60` : "0 10px 30px rgba(0,0,0,0.1)",
+        transform: isHovered ? "translateY(-12px)" : "translateY(0)",
+        transition: "all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }}
+      className="card-2010"
+    >
+      <img
+        src={lugar.img}
+        alt={lugar.name}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: isHovered ? "scale(1.15)" : "scale(1.05)",
+          transition: "transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+        }}
+      />
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: isHovered
+          ? `linear-gradient(to top, ${lugar.color}E6 0%, rgba(0,0,0,0.1) 60%, transparent 100%)`
+          : "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.05) 50%, transparent 100%)",
+        transition: "background 0.5s ease"
+      }} />
+      <div style={{
+        position: "absolute",
+        bottom: 32,
+        left: 24,
+        right: 24,
+        transform: isHovered ? "translateY(-10px)" : "translateY(0)",
+        transition: "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+          <MapPin size={14} color={isHovered ? "#fff" : "var(--color-gold)"} style={{ transition: "color 0.5s ease" }} />
+          <span style={{ fontSize: 13, fontWeight: 700, color: isHovered ? "rgba(255,255,255,0.9)" : "var(--color-gold)", textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.5s ease" }}>
+            {lugar.loc}
+          </span>
+        </div>
+        <h3 style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: 32,
+          fontWeight: 800,
+          color: "#fff",
+          lineHeight: 1.1,
+          textShadow: "0 4px 12px rgba(0,0,0,0.4)"
+        }}>
+          {lugar.name}
+        </h3>
+      </div>
+    </div>
   );
 }
 
@@ -299,7 +373,7 @@ export default function Home() {
               margin: "0 auto 48px",
               lineHeight: 1.6,
             }}>
-              Donde los Andes guardan los secretos más hermosos de Colombia
+              Descubre el secreto mejor guardado de los Andes: Naturaleza, historia y aventura en su máxima expresión
             </p>
 
             <div className="hero-btn-group" style={{
@@ -316,7 +390,7 @@ export default function Home() {
                   gap: 8,
                 }}
               >
-                Explorar Destinos <ArrowRight size={18} />
+                Explorar Destinos
               </Link>
               <Link
                 href="/experiencias"
@@ -369,8 +443,8 @@ export default function Home() {
               color: "var(--color-dark)",
               lineHeight: 1.2,
             }}>
-              Lugares que te dejarán
-              <span style={{ color: "var(--color-primary)", display: "block" }}>sin palabras</span>
+              Escenarios mágicos que
+              <span style={{ color: "var(--color-primary)", display: "block" }}>robarán tu aliento</span>
             </h2>
           </div>
 
@@ -384,19 +458,47 @@ export default function Home() {
             ))}
           </div>
 
-          <div style={{ textAlign: "center", marginTop: 48 }}>
-            <Link
-              href="/destinos"
-              className="btn btn-primary"
-              style={{
-                fontSize: 15,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
-              Ver todos los destinos <ArrowRight size={16} />
-            </Link>
+
+        </div>
+      </section>
+
+
+      {/* ══════════════════════════════════════════════════
+          LUGARES DESTACADOS (MÁS VISITADOS)
+      ══════════════════════════════════════════════════ */}
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "#fff" }}>
+        <div className="container-wide">
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <div className="section-label" style={{ justifyContent: "center" }}>Imperdibles</div>
+            <h2 style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(36px, 4vw, 56px)",
+              fontWeight: 700,
+              color: "var(--color-dark)",
+              lineHeight: 1.2,
+            }}>
+              Los sitios más
+              <span style={{ color: "var(--color-gold)", display: "block" }}>icónicos y visitados</span>
+            </h2>
+            <p style={{
+              fontSize: "clamp(16px, 2vw, 18px)",
+              color: "var(--color-text-light)",
+              maxWidth: 600,
+              margin: "24px auto 0",
+              lineHeight: 1.6,
+            }}>
+              Maravillas naturales que no pueden faltar en tu itinerario cuando visites la Provincia de Sugamuxi.
+            </p>
+          </div>
+
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 32,
+          }}>
+            {topLugares.map((lugar, i) => (
+              <DestacadoCard key={lugar.name} lugar={lugar} index={i} />
+            ))}
           </div>
         </div>
       </section>
@@ -495,7 +597,7 @@ export default function Home() {
             fontWeight: 700,
             color: "#fff",
             lineHeight: 1.15,
-            marginBottom: 20,
+            marginBottom: 48,
           }}>
             Mapa Interactivo de
             <br />
@@ -509,34 +611,6 @@ export default function Home() {
               Sugamuxi
             </span>
           </h2>
-
-          <p style={{
-            fontSize: 17,
-            color: "rgba(255,255,255,0.55)",
-            maxWidth: 560,
-            margin: "0 auto 48px",
-            lineHeight: 1.75,
-          }}>
-            Estamos construyendo una experiencia única: un mapa interactivo donde podrás explorar
-            los 13 municipios, descubrir rutas, puntos de interés y planificar tu aventura perfecta
-            por la Provincia de Sugamuxi.
-          </p>
-
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 56 }}>
-            {["13 Municipios", "Rutas turísticas", "Puntos de interés", "Clima en tiempo real", "Tours guiados"].map(chip => (
-              <span key={chip} style={{
-                padding: "8px 18px",
-                borderRadius: "var(--radius-full)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "rgba(255,255,255,0.05)",
-                fontSize: 13,
-                color: "rgba(255,255,255,0.6)",
-                fontWeight: 500,
-              }}>
-                {chip}
-              </span>
-            ))}
-          </div>
 
           <div style={{
             position: "relative",
@@ -607,10 +681,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <p style={{ marginTop: 32, fontSize: 13, color: "rgba(255,255,255,0.3)", letterSpacing: "0.04em" }}>
-            Fase 1 · En construcción · Disponible pronto
-          </p>
         </div>
       </section>
 
@@ -630,62 +700,80 @@ export default function Home() {
                 color: "var(--color-dark)",
                 lineHeight: 1.2,
               }}>
-                Experiencias<br />
-                <span style={{ color: "var(--color-primary)" }}>que transforman</span>
+                Aventuras que
+                <span style={{ color: "var(--color-primary)", display: "block" }}>despertarán tu espíritu</span>
               </h2>
             </div>
-            <Link
-              href="/experiencias"
-              className="btn btn-primary"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
-              Ver todas <ArrowRight size={16} />
-            </Link>
+
           </div>
 
-          <div className="exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
-            {experiences.map(({ icon: Icon, title, desc, color }, i) => (
+          <div className="exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+            {experiences.map(({ icon: Icon, title, desc, color, img }, i) => (
               <div
                 key={title}
+                className="card"
                 style={{
-                  padding: 32,
                   borderRadius: "var(--radius-lg)",
-                  border: "1px solid var(--color-gray-200)",
-                  background: "var(--color-gray-50)",
+                  overflow: "hidden",
+                  position: "relative",
                   transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                   cursor: "pointer",
                   animationDelay: `${i * 0.1}s`,
+                  height: 380,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget;
                   el.style.transform = "translateY(-6px)";
-                  el.style.boxShadow = "0 20px 40px rgba(0,0,0,0.08)";
-                  el.style.background = "#fff";
-                  el.style.borderColor = "var(--color-gray-100)";
+                  el.style.boxShadow = `0 24px 40px -12px ${color}50`;
+                  const imgEl = el.querySelector("img");
+                  if (imgEl) imgEl.style.transform = "scale(1.12)";
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget;
                   el.style.transform = "translateY(0)";
                   el.style.boxShadow = "none";
-                  el.style.background = "var(--color-gray-50)";
-                  el.style.borderColor = "var(--color-gray-200)";
+                  const imgEl = el.querySelector("img");
+                  if (imgEl) imgEl.style.transform = "scale(1.02)";
                 }}
               >
+                <img
+                  src={img}
+                  alt={title}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transform: "scale(1.02)",
+                    transition: "transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)",
+                    zIndex: 0,
+                  }}
+                />
                 <div style={{
-                  width: 56, height: 56,
-                  borderRadius: "var(--radius-md)",
-                  background: `${color}15`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: 20,
-                }}>
-                  <Icon size={26} color={color} />
+                  position: "absolute",
+                  inset: 0,
+                  background: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)`,
+                  zIndex: 1,
+                }} />
+
+                <div style={{ position: "relative", zIndex: 2, padding: "32px 24px" }}>
+                  <div style={{
+                    width: 48, height: 48,
+                    borderRadius: "50%",
+                    background: color,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: 16,
+                    boxShadow: `0 8px 24px ${color}80`,
+                  }}>
+                    <Icon size={24} color="#fff" />
+                  </div>
+                  <h3 style={{ fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 8, fontFamily: "var(--font-serif)" }}>{title}</h3>
+                  <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>{desc}</p>
                 </div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--color-dark)", marginBottom: 10 }}>{title}</h3>
-                <p style={{ fontSize: 14, color: "var(--color-text-light)", lineHeight: 1.65 }}>{desc}</p>
               </div>
             ))}
           </div>
@@ -722,10 +810,10 @@ export default function Home() {
             marginBottom: 20,
             lineHeight: 1.2,
           }}>
-            Tu aventura en Sugamuxi<br />comienza hoy
+            Despierta tu espíritu aventurero.<br />Tu viaje inolvidable comienza aquí
           </h2>
-          <p style={{ fontSize: 17, color: "rgba(255,255,255,0.7)", marginBottom: 40 }}>
-            Conecta con guías locales y vive experiencias auténticas
+          <p style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginBottom: 40 }}>
+            Descubre paisajes épicos y conecta con la magia de nuestros destinos locales
           </p>
           <div className="hero-btn-group" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
@@ -738,7 +826,7 @@ export default function Home() {
                 gap: 8,
               }}
             >
-              Planifica tu viaje <ArrowRight size={16} />
+              Planifica tu viaje
             </Link>
             <Link
               href="/destinos"

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Clock, Star, Mountain, MapPin } from "lucide-react";
+import { ArrowRight, Clock, Star, MapPin } from "lucide-react";
 
 import { destinations } from "@/data/destinations";
 
@@ -184,7 +184,6 @@ function DestinationCard({ dest, index }: { dest: any, index: number }) {
             transition: "all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)",
           }}>
             Descubrir
-            <ArrowRight size={16} />
           </div>
         </div>
       </div>
@@ -243,22 +242,7 @@ export default function Destinos() {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
-      <section style={{ padding: "80px 0", background: "var(--color-primary)", textAlign: "center" }}>
-        <div className="container">
-          <Mountain size={40} color="rgba(255,255,255,0.3)" style={{ margin: "0 auto 16px" }} />
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 40, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
-            ¿No sabes por dónde empezar?
-          </h2>
-          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
-            Contáctanos y te ayudamos a diseñar el itinerario perfecto para tu grupo.
-          </p>
-          <Link href="/contacto" className="btn btn-gold" style={{ fontSize: 15 }}>
-            Planifica tu viaje <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
     </div>
+
   );
 }

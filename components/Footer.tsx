@@ -1,41 +1,121 @@
 "use client";
 
 import Link from "next/link";
-import { Mountain, Facebook, Instagram, Youtube, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Escudos/símbolos de los 13 municipios de Sugamuxi
+   Fuente: Wikimedia Commons (upload.wikimedia.org) — URLs verificadas
+   ──────────────────────────────────────────────────────────────────────── */
+const municipios = [
+  {
+    nombre: "Sogamoso",
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/af/Escudo_de_Sogamoso.svg",
+    tipo: "escudo",
+  },
+  {
+    nombre: "Monguí",
+    /* No hay escudo en Commons — se usa imagen de la basílica como distintivo */
+    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Basilica_de_Mongui_Boyaca_Colombia.jpg/120px-Basilica_de_Mongui_Boyaca_Colombia.jpg",
+    tipo: "foto",
+  },
+  {
+    nombre: "Aquitania",
+    img: "https://upload.wikimedia.org/wikipedia/commons/6/65/Escudo_de_Aquitania_%28Boyac%C3%A1%29.svg",
+    tipo: "escudo",
+  },
+  {
+    nombre: "Iza",
+    /* Bandera oficial */
+    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Flag_of_Iza_%28Boyac%C3%A1%29.svg/200px-Flag_of_Iza_%28Boyac%C3%A1%29.svg.png",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Nobsa",
+    img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Escudo_nobsa.gif",
+    tipo: "escudo",
+  },
+  {
+    nombre: "Firavitoba",
+    img: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Escudo_de_Firavitoba.svg",
+    tipo: "escudo",
+  },
+  {
+    nombre: "Tibasosa",
+    img: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Flag_of_Tibasosa_%28Boyac%C3%A1%29.svg",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Tota",
+    img: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Flag_of_Tota_%28Boyac%C3%A1%29.svg",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Pesca",
+    img: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Escudo_de_Pesca.svg",
+    tipo: "escudo",
+  },
+  {
+    nombre: "Cuítiva",
+    img: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_Cu%C3%ADtiva.svg",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Gámeza",
+    img: "https://upload.wikimedia.org/wikipedia/commons/8/81/Flag_of_G%C3%A1meza_%28Boyac%C3%A1%29.svg",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Corrales",
+    img: "https://upload.wikimedia.org/wikipedia/commons/d/df/Flag_of_Corrales_%28Boyac%C3%A1%29.svg",
+    tipo: "bandera",
+  },
+  {
+    nombre: "Mongua",
+    img: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Mongua_%28Boyac%C3%A1%29.svg",
+    tipo: "bandera",
+  },
+];
 
 export default function Footer() {
   return (
     <footer style={{
       background: "var(--color-dark)",
       color: "rgba(255,255,255,0.7)",
-      paddingTop: 80,
+      paddingTop: 56,
     }}>
       <div className="container-wide" style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-        gap: 48,
-        paddingBottom: 64,
+        gap: 32,
+        paddingBottom: 40,
       }}>
         {/* Brand */}
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <div style={{
-              width: 44, height: 44,
-              background: "linear-gradient(135deg, var(--color-primary), var(--color-primary-xl))",
-              borderRadius: 10,
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <Mountain size={24} color="#fff" />
-            </div>
-            <div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: "#fff" }}>Sugamuxi</div>
-              <div style={{ fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Provincia · Boyacá</div>
-            </div>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
+            <img
+              src="/assets/LogoSugamuxi.png"
+              alt="Logo Sugamuxi"
+              style={{
+                height: 56,
+                objectFit: "contain",
+                transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.4))"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.08) translateY(-4px)";
+                e.currentTarget.style.filter = "drop-shadow(0 12px 16px rgba(255,255,255,0.15))";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1) translateY(0)";
+                e.currentTarget.style.filter = "drop-shadow(0 4px 8px rgba(0,0,0,0.4))";
+              }}
+            />
           </div>
-          <p style={{ fontSize: 14, lineHeight: 1.7, color: "rgba(255,255,255,0.5)", maxWidth: 260 }}>
+          <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(255,255,255,0.5)", maxWidth: 260 }}>
             Destino turístico oficial de la Provincia de Sugamuxi en el corazón de Boyacá, Colombia.
           </p>
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+          <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
             {[Facebook, Instagram, Youtube].map((Icon, i) => (
               <a key={i} href="#" style={{
                 width: 40, height: 40,
@@ -64,57 +144,32 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation */}
-        <div>
-          <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 20, fontSize: 14, letterSpacing: "0.06em", textTransform: "uppercase" }}>Explorar</h4>
-          <ul style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[
-              { label: "Inicio", href: "/" },
-              { label: "Destinos", href: "/destinos" },
-              { label: "Experiencias", href: "/experiencias" },
-              { label: "Cultura", href: "/cultura" },
-              { label: "Contacto", href: "/contacto" },
-            ].map(l => (
-              <li key={l.href}>
-                <Link href={l.href} style={{
-                  fontSize: 14,
-                  color: "rgba(255,255,255,0.5)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  transition: "color 0.2s ease",
-                }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
-                >
-                  <ArrowRight size={12} />
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Destinations */}
-        <div>
-          <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 20, fontSize: 14, letterSpacing: "0.06em", textTransform: "uppercase" }}>Municipios</h4>
-          <ul style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {["Sogamoso", "Monguí", "Aquitania", "Iza", "Nobsa", "Firavitoba"].map(m => (
-              <li key={m}>
-                <a href="#" style={{
+        <div style={{ gridColumn: "span 2" }}>
+          <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 16, fontSize: 13, letterSpacing: "0.06em", textTransform: "uppercase" }}>Municipios de Sugamuxi</h4>
+          <ul style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+            columnGap: 16,
+            rowGap: 10
+          }}>
+            {municipios.map(({ nombre }) => (
+              <li key={nombre}>
+                <Link href="/destinos" style={{
                   fontSize: 14,
                   color: "rgba(255,255,255,0.5)",
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
                   transition: "color 0.2s ease",
+                  textDecoration: "none",
                 }}
                   onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "var(--color-gold)"}
                   onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
                 >
                   <MapPin size={12} />
-                  {m}
-                </a>
+                  {nombre}
+                </Link>
               </li>
             ))}
           </ul>
@@ -122,8 +177,8 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 20, fontSize: 14, letterSpacing: "0.06em", textTransform: "uppercase" }}>Contacto</h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 16, fontSize: 13, letterSpacing: "0.06em", textTransform: "uppercase" }}>Contacto</h4>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { Icon: MapPin, text: "Sogamoso, Boyacá, Colombia" },
               { Icon: Phone, text: "+57 (8) 770 0000" },
@@ -145,10 +200,11 @@ export default function Footer() {
         </div>
       </div>
 
+
       {/* Bottom bar */}
       <div style={{
         borderTop: "1px solid rgba(255,255,255,0.07)",
-        padding: "20px 0",
+        padding: "16px 0",
       }}>
         <div className="container-wide footer-bottom" style={{
           display: "flex",

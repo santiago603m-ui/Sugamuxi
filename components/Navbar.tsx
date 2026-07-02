@@ -123,23 +123,25 @@ export default function Navbar() {
       }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
 
-          <Link href="/" style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            textDecoration: "none"
-          }}>
-            <MapPin size={22} color="var(--color-gold)" strokeWidth={2.5} />
-            <span style={{
-              fontSize: 20,
-              fontWeight: 800,
-              color: textColor,
-              letterSpacing: "-0.5px",
-              fontFamily: "var(--font-serif)",
-              transition: "color 0.3s ease",
-            }}>
-              Sugamuxi
-            </span>
+          <Link href="/" style={{ display: "flex", alignItems: "center" }}>
+            <img 
+              src="/assets/LogoSugamuxi.png" 
+              alt="Logo Sugamuxi" 
+              style={{ 
+                height: 56, 
+                objectFit: "contain",
+                transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))"
+              }} 
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.1) rotate(-1.5deg)";
+                e.currentTarget.style.filter = "drop-shadow(0 8px 12px rgba(201,150,58,0.35))";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1) rotate(0deg)";
+                e.currentTarget.style.filter = "drop-shadow(0 4px 6px rgba(0,0,0,0.1))";
+              }}
+            />
           </Link>
 
           <nav style={{ display: "flex", gap: 8, alignItems: "center" }} className="nav-desktop">

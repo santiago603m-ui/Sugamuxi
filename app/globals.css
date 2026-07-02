@@ -28,15 +28,15 @@
 
 /* ── Design Tokens ─────────────────────────────────────── */
 :root {
-  --color-primary: #1B5E3B;
-  /* deep emerald green */
-  --color-primary-l: #2E8B57;
-  /* medium emerald */
-  --color-primary-xl: #4CAF7A;
-  /* light emerald */
-  --color-gold: #C9963A;
-  /* warm gold */
-  --color-gold-l: #E8B55A;
+  --color-primary: #4C6C29;
+  /* Logo Sugamuxi Green */
+  --color-primary-l: #5F8534;
+  /* medium olive green */
+  --color-primary-xl: #719E3E;
+  /* light olive green */
+  --color-gold: #8B5E34;
+  /* warm cafe / brown */
+  --color-gold-l: #A67B5B;
   --color-cream: #FBF8F3;
   --color-dark: #0F1A14;
   --color-dark-2: #1A2B20;

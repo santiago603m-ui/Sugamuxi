@@ -28,28 +28,32 @@ export const highlights: Highlight[] = [
     slug: "sogamoso",
     tag: "Ciudad del Sol",
     img: "https://images.unsplash.com/photo-1549645938-34863f683bb5?auto=format&fit=crop&q=80&w=800",
-    color: "#1B5E3B"
+    color: "#1B5E3B",
+    desc: "Capital de la provincia, centro cultural y hogar del imponente Templo del Sol muisca."
   },
   {
     name: "Monguí",
     slug: "mongui",
     tag: "Patrimonio",
     img: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&q=80&w=800",
-    color: "#C9963A"
+    color: "#C9963A",
+    desc: "El pueblo más lindo de Boyacá, cuna de fabricantes de balones y paisajes empedrados."
   },
   {
     name: "Aquitania",
     slug: "aquitania",
     tag: "Lago de Tota",
     img: "https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&q=80&w=800",
-    color: "#2E8B57"
+    color: "#2E8B57",
+    desc: "Paraíso acuático y truchero, custodio de las místicas aguas del majestuoso Lago de Tota."
   },
   {
     name: "Iza",
     slug: "iza",
     tag: "Aguas termales",
     img: "https://images.unsplash.com/photo-1582046467006-2531eec2534a?auto=format&fit=crop&q=80&w=800",
-    color: "#E8B55A"
+    color: "#E8B55A",
+    desc: "Naturaleza, postres tradicionales y aguas termales curativas para el descanso total."
   },
 ];
 
@@ -61,8 +65,8 @@ export const stats: Stat[] = [
 ];
 
 export const homeExperiences: HomeExperience[] = [
-  { icon: Compass, title: "Senderismo Andino", desc: "Rutas entre páramos y lagunas glaciares con guías locales certificados.", color: "#1B5E3B" },
-  { icon: Camera, title: "Turismo Cultural", desc: "Museos, mercados artesanales y festivales tradicionales boyacenses.", color: "#C9963A" },
-  { icon: Wind, title: "Deportes de Aventura", desc: "Parapente, ciclomontañismo y kayak en el corazón de los Andes.", color: "#2E8B57" },
-  { icon: Zap, title: "Gastronomía Local", desc: "Piquete boyacense, chicha de maíz y cocina de tradición centenaria.", color: "#8B4513" },
+  { icon: Compass, title: "Senderismo Andino", desc: "Rutas entre páramos y lagunas glaciares con guías locales certificados.", color: "#1B5E3B", img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=1200" },
+  { icon: Camera, title: "Turismo Cultural", desc: "Museos, mercados artesanales y festivales tradicionales boyacenses.", color: "#C9963A", img: "https://images.unsplash.com/photo-1533604100650-89191dbbc1cc?auto=format&fit=crop&q=80&w=1200" },
+  { icon: Wind, title: "Deportes de Aventura", desc: "Parapente, ciclomontañismo y kayak en el corazón de los Andes.", color: "#2E8B57", img: "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&q=80&w=1200" },
+  { icon: Zap, title: "Gastronomía Local", desc: "Piquete boyacense, chicha de maíz y cocina de tradición centenaria.", color: "#8B4513", img: "https://images.unsplash.com/photo-1582283526972-78d1f86da12d?auto=format&fit=crop&q=80&w=1200" },
 ];

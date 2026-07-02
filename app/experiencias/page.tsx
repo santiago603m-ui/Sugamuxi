@@ -160,7 +160,7 @@ export default function Experiencias() {
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = "0.85"}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = "1"}
                     >
-                      Reservar <ArrowRight size={12} />
+                      Reservar
                     </button>
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function Experiencias() {
             Diseñamos itinerarios a la medida de tu grupo y presupuesto.
           </p>
           <Link href="/contacto" className="btn btn-gold">
-            Contáctanos <ArrowRight size={16} />
+            Contáctanos
           </Link>
         </div>
       </section>

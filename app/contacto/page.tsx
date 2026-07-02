@@ -1,8 +1,63 @@
 "use client";
 
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { useState } from "react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader } from "lucide-react";
+
+type Status = "idle" | "loading" | "success" | "error";
 
 export default function Contacto() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
+      subject: "Nueva consulta desde Sugamuxi.gov.co",
+      from_name: "Provincia de Sugamuxi",
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      motivo: formData.get("motivo"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStatus("success");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setStatus("error");
+        setErrorMessage(result.message ?? "Ocurrió un error. Por favor intenta de nuevo.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("No se pudo enviar el mensaje. Verifica tu conexión a internet.");
+    }
+  }
+
+  const inputStyle: React.CSSProperties = {
+    padding: "14px 16px",
+    borderRadius: "var(--radius-md)",
+    border: "1px solid var(--color-gray-200)",
+    background: "var(--color-gray-50)",
+    fontFamily: "inherit",
+    fontSize: 14,
+    outline: "none",
+    transition: "all 0.2s",
+    width: "100%",
+  };
+
   return (
     <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
 
@@ -63,9 +118,9 @@ export default function Contacto() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
               {[
-                { icon: MapPin, title: "Ubicación",          text: "Centro de Información Turística\nSogamoso, Boyacá, Colombia" },
-                { icon: Phone,  title: "Teléfono",           text: "+57 (8) 770 0000\n+57 300 123 4567 (WhatsApp)" },
-                { icon: Mail,   title: "Correo",             text: "info@sugamuxi.gov.co\nturismo@sugamuxi.gov.co" },
+                { icon: MapPin, title: "Ubicación",           text: "Centro de Información Turística\nSogamoso, Boyacá, Colombia" },
+                { icon: Phone,  title: "Teléfono",            text: "+57 (8) 770 0000\n+57 300 123 4567 (WhatsApp)" },
+                { icon: Mail,   title: "Correo",              text: "info@sugamuxi.gov.co\nturismo@sugamuxi.gov.co" },
                 { icon: Clock,  title: "Horario de Atención", text: "Lunes a Viernes: 8:00 AM - 6:00 PM\nSábados y Domingos: 9:00 AM - 4:00 PM" },
               ].map(({ icon: Icon, title, text }) => (
                 <div key={title} style={{ display: "flex", gap: 16 }}>
@@ -96,108 +151,160 @@ export default function Contacto() {
             boxShadow: "var(--shadow-lg)",
             border: "1px solid var(--color-gray-200)",
           }}>
-            <h3 style={{ fontSize: 24, fontWeight: 700, color: "var(--color-dark)", marginBottom: 32 }}>Envíanos un mensaje</h3>
-            <form onSubmit={e => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <h3 style={{ fontSize: 24, fontWeight: 700, color: "var(--color-dark)", marginBottom: 32 }}>
+              Envíanos un mensaje
+            </h3>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Nombre completo</label>
-                <input
-                  type="text"
-                  placeholder="Tu nombre"
-                  style={{
-                    padding: "14px 16px", borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--color-gray-200)",
-                    background: "var(--color-gray-50)",
-                    fontFamily: "inherit", fontSize: 14,
-                    outline: "none", transition: "all 0.2s"
-                  }}
-                  onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                  onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                />
-              </div>
-
-              <div className="contact-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Email</label>
-                  <input
-                    type="email"
-                    placeholder="Tu correo"
-                    style={{
-                      padding: "14px 16px", borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--color-gray-200)",
-                      background: "var(--color-gray-50)",
-                      fontFamily: "inherit", fontSize: 14,
-                      outline: "none", transition: "all 0.2s"
-                    }}
-                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                  />
+            {/* Success state */}
+            {status === "success" && (
+              <div style={{
+                display: "flex", flexDirection: "column", alignItems: "center",
+                gap: 16, padding: "40px 24px", textAlign: "center",
+              }}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: "50%",
+                  background: "rgba(76,108,41,0.1)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <CheckCircle size={36} color="var(--color-primary)" />
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Teléfono</label>
-                  <input
-                    type="tel"
-                    placeholder="Tu número (opcional)"
-                    style={{
-                      padding: "14px 16px", borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--color-gray-200)",
-                      background: "var(--color-gray-50)",
-                      fontFamily: "inherit", fontSize: 14,
-                      outline: "none", transition: "all 0.2s"
-                    }}
-                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Motivo del viaje</label>
-                <select
-                  style={{
-                    padding: "14px 16px", borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--color-gray-200)",
-                    background: "var(--color-gray-50)",
-                    fontFamily: "inherit", fontSize: 14,
-                    outline: "none", transition: "all 0.2s",
-                    color: "var(--color-text)",
-                  }}
-                  onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                  onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                <h4 style={{ fontSize: 20, fontWeight: 700, color: "var(--color-dark)" }}>
+                  ¡Mensaje enviado!
+                </h4>
+                <p style={{ fontSize: 15, color: "var(--color-text-light)", lineHeight: 1.6 }}>
+                  Gracias por contactarnos. Te responderemos en las próximas 24 horas.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="btn btn-primary"
+                  style={{ marginTop: 8 }}
                 >
-                  <option>Turismo y vacaciones</option>
-                  <option>Ecoturismo y aventura</option>
-                  <option>Turismo cultural</option>
-                  <option>Eventos y convenciones</option>
-                  <option>Otro</option>
-                </select>
+                  Enviar otro mensaje
+                </button>
               </div>
+            )}
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>Mensaje</label>
-                <textarea
-                  placeholder="¿Cómo podemos ayudarte?"
-                  rows={4}
+            {/* Form fields */}
+            {status !== "success" && (
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+
+                {/* Error banner */}
+                {status === "error" && (
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: 10,
+                    padding: "12px 16px", borderRadius: "var(--radius-md)",
+                    background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.25)",
+                    color: "#dc2626", fontSize: 14,
+                  }}>
+                    <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                    {errorMessage}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
+                    Nombre completo <span style={{ color: "#dc2626" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Tu nombre"
+                    required
+                    style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                  />
+                </div>
+
+                <div className="contact-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
+                      Email <span style={{ color: "#dc2626" }}>*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Tu correo"
+                      required
+                      style={inputStyle}
+                      onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                    />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
+                      Teléfono
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Tu número (opcional)"
+                      style={inputStyle}
+                      onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
+                    Motivo del viaje
+                  </label>
+                  <select
+                    name="motivo"
+                    style={{ ...inputStyle }}
+                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                  >
+                    <option>Turismo y vacaciones</option>
+                    <option>Ecoturismo y aventura</option>
+                    <option>Turismo cultural</option>
+                    <option>Eventos y convenciones</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
+                    Mensaje <span style={{ color: "#dc2626" }}>*</span>
+                  </label>
+                  <textarea
+                    name="message"
+                    placeholder="¿Cómo podemos ayudarte?"
+                    rows={4}
+                    required
+                    style={{ ...inputStyle, resize: "vertical" }}
+                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="btn btn-primary"
                   style={{
-                    padding: "14px 16px", borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--color-gray-200)",
-                    background: "var(--color-gray-50)",
-                    fontFamily: "inherit", fontSize: 14,
-                    outline: "none", transition: "all 0.2s",
-                    resize: "vertical"
+                    width: "100%",
+                    justifyContent: "center",
+                    marginTop: 16,
+                    padding: "16px",
+                    opacity: status === "loading" ? 0.75 : 1,
+                    cursor: status === "loading" ? "not-allowed" : "pointer",
                   }}
-                  onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                  onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                />
-              </div>
-
-              <button
-                className="btn btn-primary"
-                style={{ width: "100%", justifyContent: "center", marginTop: 16, padding: "16px" }}
-              >
-                Enviar mensaje <Send size={16} />
-              </button>
-            </form>
+                >
+                  {status === "loading" ? (
+                    <>
+                      <Loader size={16} style={{ animation: "spin-slow 1s linear infinite" }} />
+                      Enviando…
+                    </>
+                  ) : (
+                    <>
+                      Enviar mensaje <Send size={16} />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
