@@ -26,26 +26,47 @@
   }
 }
 
-/* ── Design Tokens ─────────────────────────────────────── */
+/* ── Design Tokens — Paleta Sugamuxi ───────────────────── */
+/*
+   Inspirada en los elementos naturales y culturales de la
+   Provincia de Sugamuxi:
+     · Verde páramo / fauna   → --color-paramo
+     · Azul lagos / cielo     → --color-lago
+     · Rojo vino / tierra     → --color-tierra
+     · Café / madera          → --color-cafe
+     · Oscuro hero            → --color-dark
+*/
 :root {
-  --color-primary: #4C6C29;
-  /* Logo Sugamuxi Green */
-  --color-primary-l: #5F8534;
-  /* medium olive green */
-  --color-primary-xl: #719E3E;
-  /* light olive green */
-  --color-gold: #8B5E34;
-  /* warm cafe / brown */
-  --color-gold-l: #A67B5B;
-  --color-cream: #FBF8F3;
-  --color-dark: #0F1A14;
-  --color-dark-2: #1A2B20;
-  --color-text: #2C3E35;
-  --color-text-light: #6B7D74;
-  --color-white: #FFFFFF;
-  --color-gray-50: #F8FAF9;
-  --color-gray-100: #EFF4F1;
-  --color-gray-200: #D8E5DC;
+  /* ── Verde Páramo (fauna, naturaleza) ── */
+  --color-primary:    #3A6B2A;   /* verde bosque profundo */
+  --color-primary-l:  #4E8A39;   /* verde medio páramo    */
+  --color-primary-xl: #6BAF4A;   /* verde claro fresco    */
+
+  /* ── Azul Lagos (Lago de Tota, cielos) ── */
+  --color-lago:       #1E4D7B;   /* azul lago profundo    */
+  --color-lago-l:     #2E6EA8;   /* azul medio andino     */
+  --color-lago-xl:    #4A8EC2;   /* azul cielo claro      */
+
+  /* ── Rojo Tierra / Vino (héroe, cerámica) ── */
+  --color-tierra:     #6B1A2A;   /* vino / rojo tierra    */
+  --color-tierra-l:   #8C2C3E;   /* rojo medio cálido     */
+
+  /* ── Café / Madera (artesanías, lana) ── */
+  --color-gold:       #7A4B1E;   /* café oscuro cálido    */
+  --color-gold-l:     #A0683A;   /* café medio            */
+  --color-gold-xl:    #C4895A;   /* café claro / arena    */
+
+  /* ── Fondo y textos ── */
+  --color-cream:      #FAF7F2;   /* crema natural         */
+  --color-dark:       #0D1520;   /* azul-noche del hero   */
+  --color-dark-2:     #16243A;   /* variante oscura       */
+  --color-dark-green: #0F1A14;   /* verde noche           */
+  --color-text:       #243040;   /* texto principal       */
+  --color-text-light: #627080;   /* texto secundario      */
+  --color-white:      #FFFFFF;
+  --color-gray-50:    #F5F8FA;
+  --color-gray-100:   #E8EFF5;
+  --color-gray-200:   #C8D8E5;
 
   --font-body: 'Montserrat', sans-serif;
   --font-serif: 'Montserrat', sans-serif;
@@ -91,6 +112,18 @@ body {
 img {
   display: block;
   max-width: 100%;
+  /* Mejor renderización de imágenes */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: bicubic;
+}
+
+/* Imágenes de cover: optimización de pintura */
+img[style*="object-fit: cover"],
+img[style*="objectFit: cover"] {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 a {
@@ -120,12 +153,12 @@ ol {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--color-lago);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+  background: var(--color-tierra);
 }
 
 /* ── Utility ───────────────────────────────────────────── */
@@ -180,13 +213,13 @@ ol {
 .btn-primary {
   background: var(--color-primary);
   color: var(--color-white);
-  box-shadow: 0 4px 20px rgba(27, 94, 59, 0.35);
+  box-shadow: 0 4px 20px rgba(58,107,42,0.38);
 }
 
 .btn-primary:hover {
   background: var(--color-primary-l);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(27, 94, 59, 0.45);
+  box-shadow: 0 8px 30px rgba(58,107,42,0.50);
 }
 
 .btn-outline {
@@ -203,14 +236,16 @@ ol {
 }
 
 .btn-gold {
-  background: var(--color-gold);
-  color: var(--color-dark);
-  box-shadow: 0 4px 20px rgba(201, 150, 58, 0.4);
+  background: var(--color-gold-xl);
+  color: #1a0e06;
+  box-shadow: 0 4px 20px rgba(196,137,90,0.45);
 }
 
 .btn-gold:hover {
   background: var(--color-gold-l);
+  color: var(--color-white);
   transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(160,104,58,0.55);
 }
 
 /* ── Cards ─────────────────────────────────────────────── */
@@ -351,9 +386,9 @@ ol {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom,
-      rgba(10, 26, 20, 0.35) 0%,
-      rgba(10, 26, 20, 0.15) 40%,
-      rgba(10, 26, 20, 0.70) 100%);
+      rgba(13,21,32,0.35) 0%,
+      rgba(13,21,32,0.15) 40%,
+      rgba(13,21,32,0.75) 100%);
 }
 
 /* ── Responsive: navbar ────────────────────────────────── */
@@ -542,4 +577,126 @@ ol {
   .exp-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mejoras adicionales globales
+══════════════════════════════════════════════════════════ */
+
+/* ── Cards: ancho completo en móvil ──────────────────────── */
+@media (max-width: 640px) {
+  .card-2010 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ── Highlights / Destinos grid responsive ───────────────── */
+@media (max-width: 900px) {
+  .highlights-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 560px) {
+  .highlights-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── DestacadoCard grid responsive ──────────────────────── */
+@media (max-width: 900px) {
+  .destacado-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 560px) {
+  .destacado-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  /* Reduce height of tall cards on mobile */
+  .destacado-card-inner {
+    height: 300px !important;
+  }
+}
+
+/* ── Hero section text sizing ────────────────────────────── */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(32px, 9vw, 56px) !important;
+  }
+  .hero-subtitle {
+    font-size: 15px !important;
+  }
+}
+
+/* ── Stats grid responsive ───────────────────────────────── */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+}
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Section headings scale down on mobile ───────────────── */
+@media (max-width: 640px) {
+  h2[style*="clamp"] {
+    font-size: clamp(26px, 7vw, 48px) !important;
+  }
+}
+
+/* ── Experiences cards height on mobile ─────────────────── */
+@media (max-width: 560px) {
+  .exp-card-img {
+    height: 200px !important;
+  }
+}
+
+/* ── Cultura alternating sections ────────────────────────── */
+@media (max-width: 768px) {
+  .culture-grid {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
+  }
+  .culture-img {
+    height: 240px !important;
+    border-radius: var(--radius-lg) !important;
+  }
+}
+
+/* ── Footer columns ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px !important;
+  }
+}
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Contacto page form ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Smooth image loading ────────────────────────────────── */
+img {
+  transition: opacity 0.3s ease;
+}
+img[loading="lazy"] {
+  opacity: 0;
+}
+img[loading="lazy"].loaded,
+img:not([loading]) {
+  opacity: 1;
 }

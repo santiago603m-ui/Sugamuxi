@@ -15,6 +15,7 @@ const navItems = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDarkBg, setIsDarkBg] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -25,6 +26,18 @@ export default function Navbar() {
     }
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
+
+  // Scroll progress bar
+  useEffect(() => {
+    const handleProgress = () => {
+      const el = document.documentElement;
+      const scrollTop = el.scrollTop || document.body.scrollTop;
+      const scrollHeight = el.scrollHeight - el.clientHeight;
+      setScrollProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+    };
+    window.addEventListener("scroll", handleProgress, { passive: true });
+    return () => window.removeEventListener("scroll", handleProgress);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -120,7 +133,20 @@ export default function Navbar() {
         border: "none",
         boxShadow: "none",
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        overflow: "hidden",
       }}>
+        {/* Scroll progress bar */}
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: 3,
+          width: `${scrollProgress}%`,
+          background: "linear-gradient(90deg, #6B1A2A, #1E4D7B, #3A6B2A, #C4895A)",
+          borderRadius: "0 3px 3px 0",
+          transition: "width 0.1s linear",
+          zIndex: 2,
+        }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
 
           <Link href="/" style={{ display: "flex", alignItems: "center" }}>

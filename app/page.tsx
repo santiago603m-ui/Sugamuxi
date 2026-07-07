@@ -4,10 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowRight, ChevronDown, MapPin, Star, Clock, Users,
-  Camera, Compass, Wind, Zap, Map
+  Camera, Compass, Wind, Zap, Map, Leaf, Waves, Mountain, Palette, Quote
 } from "lucide-react";
 
 import { highlights, stats, homeExperiences as experiences } from "@/data/home";
+import ScrollReveal from "@/components/ScrollReveal";
+import MountainDivider from "@/components/MountainDivider";
 
 function useCountUp(end: number, duration: number = 2000) {
   const [count, setCount] = useState(0);
@@ -112,6 +114,8 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
           <img
             src={dest.img}
             alt={dest.name}
+            loading="lazy"
+            decoding="async"
             style={{
               width: "100%",
               height: "100%",
@@ -194,10 +198,10 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
 }
 
 const topLugares = [
-  { name: "Playa Blanca", loc: "Lago de Tota", img: "https://images.unsplash.com/photo-1579607147771-33157e335293?auto=format&fit=crop&q=80&w=1200", color: "#2E8B57" },
-  { name: "Parque Guatika", loc: "Tibasosa", img: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=1200", color: "#C9963A" },
-  { name: "Páramo de Ocetá", loc: "Monguí", img: "https://images.unsplash.com/photo-1549645938-34863f683bb5?auto=format&fit=crop&q=80&w=1200", color: "#1B5E3B" },
-  { name: "Páramo de Siscunsí", loc: "Mongua / Sogamoso", img: "https://images.unsplash.com/photo-1498307833015-e7b400441eb8?auto=format&fit=crop&q=80&w=1200", color: "#4C6B8B" },
+  { name: "Playa Blanca", loc: "Lago de Tota", img: "/assets/lago_tota/main.jpg", color: "#1E4D7B" },
+  { name: "Páramo de Ocetá", loc: "Monguí", img: "/assets/paramo/main.jpg", color: "#3A6B2A" },
+  { name: "Templo del Sol", loc: "Sogamoso", img: "/assets/templo_sol/main.jpg", color: "#C9963A" },
+  { name: "Páramo de Siscunsí", loc: "Mongua", img: "/assets/mongua/main.jpg", color: "#6B1A2A" },
 ];
 
 function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
@@ -222,6 +226,8 @@ function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
       <img
         src={lugar.img}
         alt={lugar.name}
+        loading="lazy"
+        decoding="async"
         style={{
           width: "100%",
           height: "100%",
@@ -416,7 +422,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           STATS BAR
       ══════════════════════════════════════════════════ */}
-      <section style={{ background: "var(--color-primary)", padding: "32px 0" }}>
+      <section style={{ background: "linear-gradient(135deg, var(--color-lago) 0%, var(--color-primary) 60%, var(--color-tierra) 100%)", padding: "32px 0" }}>
         <div className="container-wide stats-grid" style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
@@ -432,31 +438,40 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           DESTINOS HIGHLIGHTS
       ══════════════════════════════════════════════════ */}
-      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-gray-50)" }}>
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-gray-50)", borderBottom: "1px solid var(--color-gray-200)" }}>
         <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <div className="section-label" style={{ justifyContent: "center" }}>Nuestros destinos</div>
-            <h2 style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(36px, 4vw, 56px)",
-              fontWeight: 700,
-              color: "var(--color-dark)",
-              lineHeight: 1.2,
-            }}>
-              Escenarios mágicos que
-              <span style={{ color: "var(--color-primary)", display: "block" }}>robarán tu aliento</span>
-            </h2>
-          </div>
+          <ScrollReveal direction="up">
+            <div style={{ textAlign: "center", marginBottom: 64 }}>
+              <div className="section-label" style={{ justifyContent: "center" }}>Nuestros destinos</div>
+              <h2 style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(36px, 4vw, 56px)",
+                fontWeight: 700,
+                color: "var(--color-dark)",
+                lineHeight: 1.2,
+              }}>
+                Escenarios mágicos que
+                <span style={{
+                  background: "linear-gradient(90deg, var(--color-primary), var(--color-lago))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "block"
+                }}>robarán tu aliento</span>
+              </h2>
+            </div>
+          </ScrollReveal>
 
-          <div className="destinos-grid" style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 24,
-          }}>
-            {highlights.map((dest, i) => (
-              <HighlightCard key={dest.name} dest={dest} index={i} />
-            ))}
-          </div>
+          <ScrollReveal delay={100}>
+            <div className="destinos-grid highlights-grid" style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 24,
+            }}>
+              {highlights.map((dest, i) => (
+                <HighlightCard key={dest.name} dest={dest} index={i} />
+              ))}
+            </div>
+          </ScrollReveal>
 
 
         </div>
@@ -466,10 +481,11 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           LUGARES DESTACADOS (MÁS VISITADOS)
       ══════════════════════════════════════════════════ */}
-      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "#fff" }}>
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "linear-gradient(180deg, var(--color-white) 0%, var(--color-gray-50) 100%)" }}>
         <div className="container-wide">
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <div className="section-label" style={{ justifyContent: "center" }}>Imperdibles</div>
+          <ScrollReveal direction="up">
+            <div style={{ textAlign: "center", marginBottom: 64 }}>
+              <div className="section-label" style={{ justifyContent: "center" }}>Imperdibles</div>
             <h2 style={{
               fontFamily: "var(--font-serif)",
               fontSize: "clamp(36px, 4vw, 56px)",
@@ -478,7 +494,12 @@ export default function Home() {
               lineHeight: 1.2,
             }}>
               Los sitios más
-              <span style={{ color: "var(--color-gold)", display: "block" }}>icónicos y visitados</span>
+              <span style={{
+                background: "linear-gradient(90deg, var(--color-gold-l), var(--color-tierra-l))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                display: "block"
+              }}>icónicos y visitados</span>
             </h2>
             <p style={{
               fontSize: "clamp(16px, 2vw, 18px)",
@@ -490,18 +511,26 @@ export default function Home() {
               Maravillas naturales que no pueden faltar en tu itinerario cuando visites la Provincia de Sugamuxi.
             </p>
           </div>
+          </ScrollReveal>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 32,
-          }}>
-            {topLugares.map((lugar, i) => (
-              <DestacadoCard key={lugar.name} lugar={lugar} index={i} />
-            ))}
-          </div>
+          <ScrollReveal delay={100}>
+            <div className="destacado-grid" style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 32,
+            }}>
+              {topLugares.map((lugar, i) => (
+                <DestacadoCard key={lugar.name} lugar={lugar} index={i} />
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
+
+      {/* ══════════════════════════════════════════════════
+          DIVIDER
+      ══════════════════════════════════════════════════ */}
+      <MountainDivider fromColor="var(--color-gray-50)" toColor="var(--color-dark)" height={80} />
 
 
       {/* ══════════════════════════════════════════════════
@@ -510,26 +539,27 @@ export default function Home() {
       <section style={{
         position: "relative",
         padding: "120px 0",
-        background: "var(--color-dark)",
+        background: "linear-gradient(160deg, var(--color-dark) 0%, #0e1e35 50%, #12100e 100%)",
         overflow: "hidden",
       }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(27,94,59,0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(201,150,58,0.10) 0%, transparent 50%)
+            radial-gradient(circle at 20% 50%, rgba(30,77,123,0.20) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(196,137,90,0.12) 0%, transparent 50%),
+            radial-gradient(circle at 50% 80%, rgba(58,107,42,0.10) 0%, transparent 50%)
           `,
         }} />
 
-        {[...Array(3)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <div key={i} style={{
             position: "absolute",
             width: 6, height: 6,
             borderRadius: "50%",
-            background: i % 2 === 0 ? "var(--color-gold)" : "var(--color-primary-xl)",
-            top: `${20 + i * 25}%`,
-            left: `${10 + i * 35}%`,
-            opacity: 0.5,
+            background: ["var(--color-gold-xl)", "var(--color-primary-xl)", "var(--color-lago-xl)", "var(--color-tierra-l)"][i],
+            top: `${15 + i * 22}%`,
+            left: `${8 + i * 28}%`,
+            opacity: 0.55,
             animation: `float ${3 + i * 0.8}s ease-in-out infinite`,
             animationDelay: `${i * 0.6}s`,
           }} />
@@ -537,80 +567,84 @@ export default function Home() {
 
         <div className="container-wide" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
 
-          <div style={{ position: "relative", display: "inline-block", marginBottom: 40 }}>
-            <div style={{
-              position: "absolute",
-              inset: -20,
-              borderRadius: "50%",
-              border: "1px solid rgba(201,150,58,0.25)",
-              animation: "pulse-ring 2.5s ease-out infinite",
-            }} />
-            <div style={{
-              position: "absolute",
-              inset: -8,
-              borderRadius: "50%",
-              border: "1px solid rgba(201,150,58,0.15)",
-              animation: "pulse-ring 2.5s ease-out infinite",
-              animationDelay: "0.8s",
-            }} />
-            <div style={{
-              width: 100, height: 100,
-              background: "linear-gradient(135deg, rgba(27,94,59,0.3), rgba(201,150,58,0.2))",
-              border: "1px solid rgba(201,150,58,0.3)",
-              borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              backdropFilter: "blur(10px)",
-            }}>
-              <Map size={44} color="var(--color-gold)" />
-            </div>
-          </div>
-
-          <div style={{ marginBottom: 24 }}>
-            <span style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "8px 24px",
-              borderRadius: "var(--radius-full)",
-              border: "1px solid rgba(201,150,58,0.4)",
-              background: "rgba(201,150,58,0.08)",
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              color: "var(--color-gold)",
-            }}>
-              <span style={{
-                width: 7, height: 7,
+          <ScrollReveal direction="up" delay={200}>
+            <div style={{ position: "relative", display: "inline-block", marginBottom: 40 }}>
+              <div style={{
+                position: "absolute",
+                inset: -20,
                 borderRadius: "50%",
-                background: "var(--color-gold)",
-                animation: "pulse 1.5s ease-in-out infinite",
-                display: "inline-block",
+                border: "1px solid rgba(74,142,194,0.30)",
+                animation: "pulse-ring 2.5s ease-out infinite",
               }} />
-              Próximamente
-            </span>
-          </div>
+              <div style={{
+                position: "absolute",
+                inset: -8,
+                borderRadius: "50%",
+                border: "1px solid rgba(196,137,90,0.20)",
+                animation: "pulse-ring 2.5s ease-out infinite",
+                animationDelay: "0.8s",
+              }} />
+              <div style={{
+                width: 100, height: 100,
+                background: "linear-gradient(135deg, rgba(30,77,123,0.35), rgba(196,137,90,0.25))",
+                border: "1px solid rgba(74,142,194,0.35)",
+                borderRadius: "50%",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                backdropFilter: "blur(10px)",
+              }}>
+                <Map size={44} color="var(--color-gold-xl)" />
+              </div>
+            </div>
 
-          <h2 style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(36px, 5vw, 72px)",
-            fontWeight: 700,
-            color: "#fff",
-            lineHeight: 1.15,
-            marginBottom: 48,
-          }}>
-            Mapa Interactivo de
-            <br />
-            <span style={{
-              background: "linear-gradient(90deg, var(--color-gold), var(--color-primary-xl), var(--color-gold))",
-              backgroundSize: "200% auto",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              animation: "shimmer 3s linear infinite",
+            <div style={{ marginBottom: 24 }}>
+              <span style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "8px 24px",
+                borderRadius: "var(--radius-full)",
+                border: "1px solid rgba(74,142,194,0.45)",
+                background: "rgba(30,77,123,0.15)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                color: "var(--color-lago-xl)",
+              }}>
+                <span style={{
+                  width: 7, height: 7,
+                  borderRadius: "50%",
+                  background: "var(--color-lago-xl)",
+                  animation: "pulse 1.5s ease-in-out infinite",
+                  display: "inline-block",
+                }} />
+                Próximamente
+              </span>
+            </div>
+
+            <h2 style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(36px, 5vw, 72px)",
+              fontWeight: 700,
+              color: "#fff",
+              lineHeight: 1.15,
+              marginBottom: 48,
             }}>
-              Sugamuxi
-            </span>
-          </h2>
+              Mapa Interactivo de
+              <br />
+              <span style={{
+                background: "linear-gradient(90deg, var(--color-lago-xl), var(--color-gold-xl), var(--color-primary-xl), var(--color-lago-xl))",
+                backgroundSize: "300% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                animation: "shimmer 4s linear infinite",
+              }}>
+                Sugamuxi
+              </span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal direction="scale" delay={400}>
 
           <div style={{
             position: "relative",
@@ -623,7 +657,7 @@ export default function Home() {
           }}>
             <div className="map-placeholder" style={{
               height: 320,
-              background: "linear-gradient(135deg, #1a2f1e 0%, #0d1f14 30%, #1B3A25 60%, #0d1f14 100%)",
+              background: "linear-gradient(135deg, #0d1e30 0%, #0d1520 30%, #1a0e1a 60%, #0d2018 100%)",
               position: "relative",
               overflow: "hidden",
             }}>
@@ -631,7 +665,7 @@ export default function Home() {
                 <div key={i} style={{
                   position: "absolute",
                   borderRadius: "50%",
-                  background: i % 3 === 0 ? "rgba(201,150,58,0.25)" : "rgba(76,175,122,0.15)",
+                  background: i % 3 === 0 ? "rgba(196,137,90,0.28)" : i % 3 === 1 ? "rgba(74,142,194,0.18)" : "rgba(107,175,74,0.15)",
                   width: 30 + (i * 17 % 50), height: 30 + (i * 17 % 50),
                   left: `${8 + (i * 19) % 80}%`,
                   top: `${12 + (i * 29) % 70}%`,
@@ -642,8 +676,10 @@ export default function Home() {
               ))}
 
               {[
-                { x: "25%", y: "35%" }, { x: "55%", y: "25%" },
-                { x: "70%", y: "55%" }, { x: "38%", y: "65%" },
+                { x: "25%", y: "35%", c: "var(--color-lago-xl)" },
+                { x: "55%", y: "25%", c: "var(--color-gold-xl)" },
+                { x: "70%", y: "55%", c: "var(--color-primary-xl)" },
+                { x: "38%", y: "65%", c: "var(--color-tierra-l)" },
               ].map((pos, i) => (
                 <div key={i} style={{
                   position: "absolute",
@@ -652,9 +688,9 @@ export default function Home() {
                 }}>
                   <div style={{
                     width: 10, height: 10,
-                    background: "var(--color-gold)",
+                    background: pos.c,
                     borderRadius: "50%",
-                    boxShadow: "0 0 0 3px rgba(201,150,58,0.2)",
+                    boxShadow: `0 0 0 3px ${pos.c}33`,
                     animation: `pulse-ring 2s ease-out infinite`,
                     animationDelay: `${i * 0.5}s`,
                   }} />
@@ -663,24 +699,25 @@ export default function Home() {
 
               <div style={{
                 position: "absolute", inset: 0,
-                background: "linear-gradient(to bottom, transparent 30%, rgba(15,26,20,0.9) 100%)",
+                background: "linear-gradient(to bottom, transparent 30%, rgba(13,21,32,0.92) 100%)",
                 display: "flex", alignItems: "flex-end", justifyContent: "center",
                 paddingBottom: 24,
               }}>
                 <div style={{
                   display: "flex", alignItems: "center", gap: 8,
                   padding: "10px 24px",
-                  background: "rgba(255,255,255,0.07)",
+                  background: "rgba(30,77,123,0.15)",
                   backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(74,142,194,0.25)",
                   borderRadius: "var(--radius-full)",
                 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--color-gold)", animation: "pulse 1.5s ease-in-out infinite" }} />
-                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>Mapa en desarrollo · Primera fase activa</span>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--color-lago-xl)", animation: "pulse 1.5s ease-in-out infinite" }} />
+                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>Mapa en desarrollo · Primera fase activa</span>
                 </div>
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -688,7 +725,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           EXPERIENCES PREVIEW
       ══════════════════════════════════════════════════ */}
-      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-white)" }}>
+      <section className="section-reduce-pad" style={{ padding: "100px 0", background: "var(--color-cream)" }}>
         <div className="container-wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 64, flexWrap: "wrap", gap: 24 }}>
             <div>
@@ -701,84 +738,97 @@ export default function Home() {
                 lineHeight: 1.2,
               }}>
                 Aventuras que
-                <span style={{ color: "var(--color-primary)", display: "block" }}>despertarán tu espíritu</span>
+                <span style={{
+                  background: "linear-gradient(90deg, var(--color-primary-l), var(--color-lago-l))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "block"
+                }}>despertarán tu espíritu</span>
               </h2>
             </div>
 
           </div>
 
-          <div className="exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-            {experiences.map(({ icon: Icon, title, desc, color, img }, i) => (
-              <div
-                key={title}
-                className="card"
-                style={{
-                  borderRadius: "var(--radius-lg)",
-                  overflow: "hidden",
-                  position: "relative",
-                  transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-                  cursor: "pointer",
-                  animationDelay: `${i * 0.1}s`,
-                  height: 380,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget;
-                  el.style.transform = "translateY(-6px)";
-                  el.style.boxShadow = `0 24px 40px -12px ${color}50`;
-                  const imgEl = el.querySelector("img");
-                  if (imgEl) imgEl.style.transform = "scale(1.12)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget;
-                  el.style.transform = "translateY(0)";
-                  el.style.boxShadow = "none";
-                  const imgEl = el.querySelector("img");
-                  if (imgEl) imgEl.style.transform = "scale(1.02)";
-                }}
-              >
-                <img
-                  src={img}
-                  alt={title}
+          <ScrollReveal delay={100}>
+            <div className="exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+              {experiences.map(({ icon: Icon, title, desc, color, img }, i) => (
+                <div
+                  key={title}
+                  className="card"
                   style={{
+                    borderRadius: "var(--radius-lg)",
+                    overflow: "hidden",
+                    position: "relative",
+                    transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                    cursor: "pointer",
+                    animationDelay: `${i * 0.1}s`,
+                    height: 380,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget;
+                    el.style.transform = "translateY(-6px)";
+                    el.style.boxShadow = `0 24px 40px -12px ${color}50`;
+                    const imgEl = el.querySelector("img");
+                    if (imgEl) imgEl.style.transform = "scale(1.12)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget;
+                    el.style.transform = "translateY(0)";
+                    el.style.boxShadow = "none";
+                    const imgEl = el.querySelector("img");
+                    if (imgEl) imgEl.style.transform = "scale(1.02)";
+                  }}
+                >
+                  <img
+                    src={img}
+                    alt={title}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transform: "scale(1.02)",
+                      transition: "transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)",
+                      zIndex: 0,
+                    }}
+                  />
+                  <div style={{
                     position: "absolute",
                     inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transform: "scale(1.02)",
-                    transition: "transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)",
-                    zIndex: 0,
-                  }}
-                />
-                <div style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)`,
-                  zIndex: 1,
-                }} />
+                    background: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)`,
+                    zIndex: 1,
+                  }} />
 
-                <div style={{ position: "relative", zIndex: 2, padding: "32px 24px" }}>
-                  <div style={{
-                    width: 48, height: 48,
-                    borderRadius: "50%",
-                    background: color,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    marginBottom: 16,
-                    boxShadow: `0 8px 24px ${color}80`,
-                  }}>
-                    <Icon size={24} color="#fff" />
+                  <div style={{ position: "relative", zIndex: 2, padding: "32px 24px" }}>
+                    <div style={{
+                      width: 48, height: 48,
+                      borderRadius: "50%",
+                      background: color,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      marginBottom: 16,
+                      boxShadow: `0 8px 24px ${color}80`,
+                    }}>
+                      <Icon size={24} color="#fff" />
+                    </div>
+                    <h3 style={{ fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 8, fontFamily: "var(--font-serif)" }}>{title}</h3>
+                    <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>{desc}</p>
                   </div>
-                  <h3 style={{ fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 8, fontFamily: "var(--font-serif)" }}>{title}</h3>
-                  <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>{desc}</p>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
+
+
+      {/* ══════════════════════════════════════════════════
+          DIVIDER
+      ══════════════════════════════════════════════════ */}
+      <MountainDivider fromColor="var(--color-cream)" toColor="var(--color-dark)" height={80} />
 
 
       {/* ══════════════════════════════════════════════════
@@ -788,17 +838,17 @@ export default function Home() {
         position: "relative",
         overflow: "hidden",
         padding: "80px 0",
-        background: "var(--color-dark)",
+        background: "linear-gradient(135deg, var(--color-tierra) 0%, var(--color-dark) 50%, var(--color-lago) 100%)",
       }}>
         <img
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2000"
+          src="/assets/paramo/main.jpg"
           alt="CTA background"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).style.display = "none";
           }}
         />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(15,26,20,0.85)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(13,21,32,0.82)" }} />
 
         <div className="container-wide" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
           <div className="section-label" style={{ justifyContent: "center" }}>¿Listo para explorar?</div>

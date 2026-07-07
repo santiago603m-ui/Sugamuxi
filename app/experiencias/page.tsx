@@ -12,7 +12,7 @@ export default function Experiencias() {
   const filtered = active === "all" ? experiences : experiences.filter(e => e.cat === active);
 
   return (
-    <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
+    <div className="page-enter">
 
       {/* Header */}
       <section className="page-header-sm" style={{
@@ -21,7 +21,7 @@ export default function Experiencias() {
         overflow: "hidden",
       }}>
         <img
-          src="https://images.unsplash.com/photo-1501786223405-6d024d7c3b8d?auto=format&fit=crop&q=80&w=2000"
+          src="/assets/paramo/main.jpg"
           alt="Experiencias en Sugamuxi"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
@@ -99,8 +99,10 @@ export default function Experiencias() {
                 className="card"
                 style={{ animationDelay: `${i * 0.08}s` }}
               >
-                <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+                <div className="exp-card-img" style={{ position: "relative", height: 220, overflow: "hidden" }}>
                   <img src={img} alt={title}
+                    loading="lazy"
+                    decoding="async"
                     style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.transform = "scale(1)"}
@@ -171,12 +173,12 @@ export default function Experiencias() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "64px 0", background: "var(--color-dark)", textAlign: "center" }}>
+      <section style={{ padding: "64px 0", background: "linear-gradient(135deg, var(--color-tierra) 0%, var(--color-dark) 55%, var(--color-lago) 100%)", textAlign: "center" }}>
         <div className="container">
           <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
             ¿Quieres una experiencia personalizada?
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.6)", marginBottom: 32 }}>
+          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", marginBottom: 32 }}>
             Diseñamos itinerarios a la medida de tu grupo y presupuesto.
           </p>
           <Link href="/contacto" className="btn btn-gold">

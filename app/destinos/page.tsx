@@ -37,6 +37,8 @@ function DestinationCard({ dest, index }: { dest: any, index: number }) {
         <img
           src={dest.img}
           alt={dest.name}
+          loading="lazy"
+          decoding="async"
           style={{
             width: "100%",
             height: "100%",
@@ -193,7 +195,7 @@ function DestinationCard({ dest, index }: { dest: any, index: number }) {
 
 export default function Destinos() {
   return (
-    <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
+    <div className="page-enter">
 
       {/* Page Header */}
       <section className="page-header-md" style={{

@@ -83,6 +83,8 @@ export default function Footer() {
       background: "var(--color-dark)",
       color: "rgba(255,255,255,0.7)",
       paddingTop: 56,
+      borderTop: "3px solid transparent",
+      borderImage: "linear-gradient(90deg, var(--color-tierra), var(--color-lago), var(--color-primary)) 1",
     }}>
       <div className="container-wide" style={{
         display: "grid",
@@ -126,11 +128,12 @@ export default function Footer() {
                 transition: "all 0.2s ease",
               }}
                 onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.background = "var(--color-primary)";
-                  el.style.borderColor = "var(--color-primary)";
-                  el.style.color = "#fff";
-                }}
+                const el = e.currentTarget as HTMLElement;
+                const colors = ["var(--color-lago)", "var(--color-tierra)", "var(--color-primary)"];
+                el.style.background = colors[i];
+                el.style.borderColor = colors[i];
+                el.style.color = "#fff";
+              }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.background = "transparent";
@@ -187,11 +190,11 @@ export default function Footer() {
               <div key={text} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                 <div style={{
                   width: 32, height: 32, flexShrink: 0,
-                  background: "rgba(27,94,59,0.2)",
+                  background: "rgba(30,77,123,0.25)",
                   borderRadius: "50%",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <Icon size={14} color="var(--color-primary-xl)" />
+                  <Icon size={14} color="var(--color-lago-xl)" />
                 </div>
                 <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, paddingTop: 6 }}>{text}</span>
               </div>

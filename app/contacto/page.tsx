@@ -59,7 +59,7 @@ export default function Contacto() {
   };
 
   return (
-    <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
+    <div className="page-enter">
 
       {/* Header */}
       <section style={{
@@ -126,11 +126,12 @@ export default function Contacto() {
                 <div key={title} style={{ display: "flex", gap: 16 }}>
                   <div style={{
                     width: 48, height: 48, flexShrink: 0,
-                    background: "var(--color-gray-200)",
+                    background: "rgba(30,77,123,0.12)",
                     borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
+                    border: "1px solid rgba(30,77,123,0.20)",
                   }}>
-                    <Icon size={20} color="var(--color-primary)" />
+                    <Icon size={20} color="var(--color-lago-l)" />
                   </div>
                   <div>
                     <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--color-dark)", marginBottom: 8 }}>{title}</h3>
@@ -163,10 +164,11 @@ export default function Contacto() {
               }}>
                 <div style={{
                   width: 72, height: 72, borderRadius: "50%",
-                  background: "rgba(76,108,41,0.1)",
+                  background: "rgba(30,77,123,0.12)",
+                  border: "1px solid rgba(30,77,123,0.25)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  <CheckCircle size={36} color="var(--color-primary)" />
+                  <CheckCircle size={36} color="var(--color-lago-l)" />
                 </div>
                 <h4 style={{ fontSize: 20, fontWeight: 700, color: "var(--color-dark)" }}>
                   ¡Mensaje enviado!
@@ -211,7 +213,7 @@ export default function Contacto() {
                     placeholder="Tu nombre"
                     required
                     style={inputStyle}
-                    onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
+                    onFocus={e => e.target.style.borderColor = "var(--color-lago-l)"}
                     onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
                   />
                 </div>

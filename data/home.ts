@@ -3,19 +3,19 @@ import { HeroSlide, Highlight, Stat, HomeExperience } from "./types";
 
 export const heroSlides: HeroSlide[] = [
   {
-    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2400",
+    img: "/assets/paramo/main.jpg",
     tag: "Naturaleza pura",
     title: "Provincia de\nSugamuxi",
     subtitle: "Donde los Andes guardan los secretos más hermosos de Colombia",
   },
   {
-    img: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&q=80&w=2400",
+    img: "/assets/mongui/main.jpg",
     tag: "Patrimonio histórico",
     title: "Monguí\nSagrado",
     subtitle: "Pueblos de piedra y cal que cuentan siglos de historia colonial",
   },
   {
-    img: "https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&q=80&w=2400",
+    img: "/assets/lago_tota/main.jpg",
     tag: "Lago de Tota",
     title: "Agua y\nCielo",
     subtitle: "El lago más alto de Colombia, un espejo de nubes y montañas",
@@ -27,7 +27,7 @@ export const highlights: Highlight[] = [
     name: "Sogamoso",
     slug: "sogamoso",
     tag: "Ciudad del Sol",
-    img: "https://images.unsplash.com/photo-1549645938-34863f683bb5?auto=format&fit=crop&q=80&w=800",
+    img: "/assets/sogamoso/main.jpg",
     color: "#1B5E3B",
     desc: "Capital de la provincia, centro cultural y hogar del imponente Templo del Sol muisca."
   },
@@ -35,7 +35,7 @@ export const highlights: Highlight[] = [
     name: "Monguí",
     slug: "mongui",
     tag: "Patrimonio",
-    img: "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&q=80&w=800",
+    img: "/assets/mongui/main.jpg",
     color: "#C9963A",
     desc: "El pueblo más lindo de Boyacá, cuna de fabricantes de balones y paisajes empedrados."
   },
@@ -43,7 +43,7 @@ export const highlights: Highlight[] = [
     name: "Aquitania",
     slug: "aquitania",
     tag: "Lago de Tota",
-    img: "https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&q=80&w=800",
+    img: "/assets/aquitania/main.jpg",
     color: "#2E8B57",
     desc: "Paraíso acuático y truchero, custodio de las místicas aguas del majestuoso Lago de Tota."
   },
@@ -51,7 +51,7 @@ export const highlights: Highlight[] = [
     name: "Iza",
     slug: "iza",
     tag: "Aguas termales",
-    img: "https://images.unsplash.com/photo-1582046467006-2531eec2534a?auto=format&fit=crop&q=80&w=800",
+    img: "/assets/iza/main.jpg",
     color: "#E8B55A",
     desc: "Naturaleza, postres tradicionales y aguas termales curativas para el descanso total."
   },
@@ -65,8 +65,8 @@ export const stats: Stat[] = [
 ];
 
 export const homeExperiences: HomeExperience[] = [
-  { icon: Compass, title: "Senderismo Andino", desc: "Rutas entre páramos y lagunas glaciares con guías locales certificados.", color: "#1B5E3B", img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=1200" },
-  { icon: Camera, title: "Turismo Cultural", desc: "Museos, mercados artesanales y festivales tradicionales boyacenses.", color: "#C9963A", img: "https://images.unsplash.com/photo-1533604100650-89191dbbc1cc?auto=format&fit=crop&q=80&w=1200" },
-  { icon: Wind, title: "Deportes de Aventura", desc: "Parapente, ciclomontañismo y kayak en el corazón de los Andes.", color: "#2E8B57", img: "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&q=80&w=1200" },
-  { icon: Zap, title: "Gastronomía Local", desc: "Piquete boyacense, chicha de maíz y cocina de tradición centenaria.", color: "#8B4513", img: "https://images.unsplash.com/photo-1582283526972-78d1f86da12d?auto=format&fit=crop&q=80&w=1200" },
+  { icon: Compass, title: "Senderismo Andino", desc: "Rutas entre páramos y lagunas glaciares con guías locales certificados.", color: "#1B5E3B", img: "/assets/paramo/main.jpg" },
+  { icon: Camera, title: "Turismo Cultural", desc: "Museos, mercados artesanales y festivales tradicionales boyacenses.", color: "#C9963A", img: "/assets/templo_sol/main.jpg" },
+  { icon: Wind, title: "Deportes de Aventura", desc: "Parapente, ciclomontañismo y kayak en el corazón de los Andes.", color: "#2E8B57", img: "/assets/lago_tota/main.jpg" },
+  { icon: Zap, title: "Gastronomía Local", desc: "Piquete boyacense, chicha de maíz y cocina de tradición centenaria.", color: "#8B4513", img: "/assets/nobsa/main.jpg" },
 ];

@@ -7,7 +7,7 @@ import { cultureSections, timeline } from "@/data/culture";
 
 export default function Cultura() {
   return (
-    <div className="page-enter" style={{ paddingTop: "var(--nav-height)" }}>
+    <div className="page-enter">
 
       {/* Header */}
       <section className="page-header-md" style={{
@@ -18,7 +18,7 @@ export default function Cultura() {
         alignItems: "center",
       }}>
         <img
-          src="https://images.unsplash.com/photo-1550159930-40066082a4fc?auto=format&fit=crop&q=80&w=2000"
+          src="/assets/mongui/main.jpg"
           alt="Cultura Sugamuxi"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
@@ -62,6 +62,8 @@ export default function Cultura() {
               <img
                 src={sec.img}
                 alt={sec.title}
+                loading="lazy"
+                decoding="async"
                 className="culture-img"
                 style={{ width: "100%", height: 380, objectFit: "cover" }}
               />
@@ -114,64 +116,10 @@ export default function Cultura() {
         </section>
       ))}
 
-      {/* Timeline / Chronology */}
-      <section style={{ padding: "80px 0", background: "var(--color-dark)" }}>
-        <div className="container" style={{ textAlign: "center" }}>
-          <div className="section-label" style={{ justifyContent: "center" }}>Historia</div>
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 40, fontWeight: 700, color: "#fff", marginBottom: 64 }}>
-            Línea de Tiempo
-          </h2>
 
-          <div style={{ position: "relative" }}>
-            {/* Line */}
-            <div className="timeline-line" style={{
-              position: "absolute",
-              left: "50%",
-              top: 0, bottom: 0,
-              width: 2,
-              background: "rgba(255,255,255,0.1)",
-              transform: "translateX(-50%)",
-            }} />
-
-            {timeline.map((item, i) => (
-              <div
-                key={item.year}
-                className="timeline-item"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 32,
-                  marginBottom: 48,
-                  flexDirection: i % 2 === 0 ? "row" : "row-reverse",
-                  textAlign: i % 2 === 0 ? "right" : "left",
-                  position: "relative",
-                }}
-              >
-                <div className="timeline-content" style={{ flex: 1, padding: i % 2 === 0 ? "0 32px 0 0" : "0 0 0 32px" }}>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: item.color, letterSpacing: "0.1em" }}>{item.year}</span>
-                  <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", margin: "6px 0" }}>{item.title}</h3>
-                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.65 }}>{item.desc}</p>
-                </div>
-
-                <div className="timeline-dot" style={{
-                  width: 16, height: 16,
-                  borderRadius: "50%",
-                  background: item.color,
-                  border: `3px solid var(--color-dark)`,
-                  boxShadow: `0 0 0 3px ${item.color}50`,
-                  flexShrink: 0,
-                  zIndex: 1,
-                }} />
-
-                <div className="timeline-spacer" style={{ flex: 1 }} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
-      <section style={{ padding: "64px 0", background: "var(--color-primary)", textAlign: "center" }}>
+      <section style={{ padding: "64px 0", background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-lago) 100%)", textAlign: "center" }}>
         <div className="container">
           <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
             Vive la cultura en persona
