@@ -13,7 +13,13 @@ export default function Cultura() {
 
       {/* Header */}
       <ParallaxHero src="/assets/mongui/main.jpg" alt="Cultura Sugamuxi" height={480}>
-        <div className="container-wide" style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%", paddingTop: "var(--nav-height)" }}>
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          textAlign: "center",
+          paddingTop: "var(--nav-height)",
+          zIndex: 2,
+        }}>
           <div className="section-label" style={{ justifyContent: "center" }}>Identidad y patrimonio</div>
           <CascadeText text="Cultura & Tradición" style={{
             fontFamily: "var(--font-serif)",
