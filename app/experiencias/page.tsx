@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { ArrowRight, Compass, Camera, Wind, Zap, TreePine, Sunset } from "lucide-react";
+import ParallaxHero from "@/components/ParallaxHero";
+import CascadeText from "@/components/CascadeText";
 import Link from "next/link";
 
 import { categories, experiences } from "@/data/experiences";
@@ -15,37 +17,27 @@ export default function Experiencias() {
     <div className="page-enter">
 
       {/* Header */}
-      <section className="page-header-sm" style={{
-        position: "relative",
-        height: 400,
-        overflow: "hidden",
-      }}>
-        <img
-          src="/assets/paramo/main.jpg"
-          alt="Experiencias en Sugamuxi"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        <div className="hero-overlay" />
+      <ParallaxHero src="/assets/paramo/main.jpg" alt="Experiencias en Sugamuxi" height={400}>
         <div style={{
           position: "absolute", inset: 0,
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           textAlign: "center",
+          paddingTop: "var(--nav-height)",
+          zIndex: 2,
         }}>
           <div className="section-label" style={{ justifyContent: "center" }}>Qué hacer en Sugamuxi</div>
-          <h1 style={{
+          <CascadeText text="Experiencias Únicas" style={{
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(38px, 6vw, 72px)",
             fontWeight: 900,
             color: "#fff",
             lineHeight: 1.1,
-          }}>
-            Experiencias Únicas
-          </h1>
+          }} />
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", maxWidth: 480, marginTop: 16 }}>
             Aventura, cultura, gastronomía y naturaleza en un solo destino andino.
           </p>
         </div>
-      </section>
+      </ParallaxHero>
 
       {/* Filter tabs */}
       <div style={{

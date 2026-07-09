@@ -2,14 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import {
-  ArrowRight, ChevronDown, MapPin, Star, Clock, Users,
-  Camera, Compass, Wind, Zap, Map, Leaf, Waves, Mountain, Palette, Quote
-} from "lucide-react";
+import { MapPin, Map } from "lucide-react";
 
 import { highlights, stats, homeExperiences as experiences } from "@/data/home";
 import ScrollReveal from "@/components/ScrollReveal";
 import MountainDivider from "@/components/MountainDivider";
+import CascadeText from "@/components/CascadeText";
 
 function useCountUp(end: number, duration: number = 2000) {
   const [count, setCount] = useState(0);
@@ -60,7 +58,7 @@ function useCountUp(end: number, duration: number = 2000) {
   return { count, ref };
 }
 
-function StatItem({ icon: Icon, value, label }: { icon: typeof Star; value: string; label: string }) {
+function StatItem({ icon: Icon, value, label }: { icon: any; value: string; label: string }) {
   const numericValue = parseInt(value.replace(/\D/g, ""));
   const suffix = value.replace(/[0-9]/g, "");
   const { count, ref } = useCountUp(numericValue, 2500);
@@ -282,7 +280,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════
           HERO — Estático: Provincia de Sugamuxi
       ══════════════════════════════════════════════════ */}
-      <section style={{
+      <section className="noise-bg" style={{
         position: "relative",
         height: "100vh",
         minHeight: 700,
@@ -320,21 +318,9 @@ export default function Home() {
             animation: "floatAmbient 8s ease-in-out infinite",
           }}>
 
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "rgba(201,150,58,0.15)",
-              border: "1px solid rgba(201,150,58,0.3)",
-              borderRadius: "var(--radius-full)",
-              padding: "8px 20px",
-              marginBottom: 28,
-            }}>
-              <MapPin size={14} color="var(--color-gold)" />
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--color-gold)" }}>
-                Naturaleza pura
-              </span>
-            </div>
 
-            <div style={{ position: "relative", display: "inline-block", marginBottom: 24 }}>
+
+            <div className="animate-fade-up" style={{ position: "relative", display: "inline-block", marginBottom: 24, animationDelay: "0.2s" }}>
               <h1 aria-hidden="true" style={{
                 position: "absolute",
                 inset: 0,
@@ -349,7 +335,7 @@ export default function Home() {
                 userSelect: "none",
                 pointerEvents: "none",
               }}>
-                Provincia de
+                Provincia de<br/>
                 Sugamuxi
               </h1>
               <h1 style={{
@@ -367,7 +353,7 @@ export default function Home() {
                 WebkitTextFillColor: "transparent",
                 animation: "shimmerBackground 25s linear infinite",
               }}>
-                Provincia de
+                Provincia de<br/>
                 Sugamuxi
               </h1>
             </div>

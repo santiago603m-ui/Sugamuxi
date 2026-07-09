@@ -2,7 +2,9 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Clock, Star, MapPin } from "lucide-react";
+import { Clock, Star } from "lucide-react";
+import ParallaxHero from "@/components/ParallaxHero";
+import CascadeText from "@/components/CascadeText";
 
 import { destinations } from "@/data/destinations";
 
@@ -198,37 +200,27 @@ export default function Destinos() {
     <div className="page-enter">
 
       {/* Page Header */}
-      <section className="page-header-md" style={{
-        position: "relative",
-        height: 420,
-        overflow: "hidden",
-      }}>
-        <img
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2000"
-          alt="Destinos de Sugamuxi"
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
-        />
-        <div className="hero-overlay" />
+      <ParallaxHero src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2000" alt="Destinos de Sugamuxi">
         <div style={{
           position: "absolute", inset: 0,
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
           textAlign: "center",
+          paddingTop: "var(--nav-height)",
+          zIndex: 2,
         }}>
           <div className="section-label" style={{ justifyContent: "center", color: "var(--color-gold)" }}>Explora la provincia</div>
-          <h1 style={{
+          <CascadeText text="Destinos de Sugamuxi" style={{
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(40px, 6vw, 80px)",
             fontWeight: 900,
             color: "#fff",
             lineHeight: 1.1,
-          }}>
-            Destinos de Sugamuxi
-          </h1>
+          }} />
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", maxWidth: 480, marginTop: 16 }}>
             13 municipios, infinitas historias. Cada rincón de la provincia te sorprenderá.
           </p>
         </div>
-      </section>
+      </ParallaxHero>
 
       {/* Destinations Grid */}
       <section style={{ padding: "80px 0", background: "var(--color-gray-50)" }}>

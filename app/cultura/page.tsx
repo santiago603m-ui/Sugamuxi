@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import ParallaxHero from "@/components/ParallaxHero";
+import CascadeText from "@/components/CascadeText";
 
 import { cultureSections, timeline } from "@/data/culture";
 
@@ -10,36 +12,22 @@ export default function Cultura() {
     <div className="page-enter">
 
       {/* Header */}
-      <section className="page-header-md" style={{
-        position: "relative",
-        height: 480,
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-      }}>
-        <img
-          src="/assets/mongui/main.jpg"
-          alt="Cultura Sugamuxi"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        <div className="hero-overlay" />
-        <div className="container-wide" style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
+      <ParallaxHero src="/assets/mongui/main.jpg" alt="Cultura Sugamuxi" height={480}>
+        <div className="container-wide" style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%", paddingTop: "var(--nav-height)" }}>
           <div className="section-label" style={{ justifyContent: "center" }}>Identidad y patrimonio</div>
-          <h1 style={{
+          <CascadeText text="Cultura & Tradición" style={{
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(40px, 6vw, 80px)",
             fontWeight: 900,
             color: "#fff",
             lineHeight: 1.1,
             marginBottom: 16,
-          }}>
-            Cultura &amp; Tradición
-          </h1>
+          }} />
           <p style={{ fontSize: 17, color: "rgba(255,255,255,0.8)", maxWidth: 560, margin: "0 auto" }}>
             Milenios de historia Muisca, colonial y boyacense que dan vida a una de las regiones culturalmente más ricas de Colombia.
           </p>
         </div>
-      </section>
+      </ParallaxHero>
 
       {/* Alternating sections */}
       {cultureSections.map((sec, i) => (
