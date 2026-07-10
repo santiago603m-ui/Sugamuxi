@@ -3,9 +3,9 @@ import { CultureSection } from "./types";
 export const cultureSections: Record<string, CultureSection[]> = {
   es: [
     {
-      title: "El Piquete Boyacense",
+      title: "Empanadas Tradicionales",
       subtitle: "Sogamoso",
-      desc: "Plato insignia de la región, ideal para compartir en familia. Se prepara con papa criolla, costilla de cerdo, gallina, longaniza, morcilla, plátano asado y mazorca. Es una comida tradicional campesina, servida comúnmente sobre hojas de plátano, que representa la abundancia de nuestra tierra.",
+      desc: "Un clásico de la comida rápida tradicional. Las empanadas, crujientes por fuera y con un delicioso relleno casero, son el pasaboca perfecto para acompañar tu recorrido por Sogamoso. Un verdadero sabor local que siempre deja con ganas de más.",
       img: "/assets/sogamoso/GastronomiaSogamoso.jpg",
       color: "#8B4513",
       side: "left",
@@ -29,9 +29,9 @@ export const cultureSections: Record<string, CultureSection[]> = {
   ],
   en: [
     {
-      title: "The Boyacá Piquete",
+      title: "Traditional Empanadas",
       subtitle: "Sogamoso",
-      desc: "The flagship dish of the region, perfect for sharing. It is prepared with baby yellow potatoes, pork ribs, hen, sausage, blood sausage, roasted plantain, and corn. It is a traditional peasant meal, commonly served on plantain leaves, representing the abundance of our land.",
+      desc: "A classic of traditional fast food. Empanadas, crispy on the outside and with a delicious homemade filling, are the perfect snack to accompany your tour of Sogamoso. A true local flavor that always leaves you wanting more.",
       img: "/assets/sogamoso/GastronomiaSogamoso.jpg",
       color: "#8B4513",
       side: "left",

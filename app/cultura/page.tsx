@@ -62,12 +62,13 @@ export default function Cultura() {
             {/* Image */}
             <div style={{ direction: "ltr", borderRadius: "var(--radius-xl)", overflow: "hidden", boxShadow: "var(--shadow-lg)" }}>
               <img
-                src={sec.img}
+                src={`${sec.img}?v=3`}
                 alt={sec.title}
-                loading="lazy"
-                decoding="async"
                 className="culture-img"
-                style={{ width: "100%", height: 380, objectFit: "cover" }}
+                style={{ 
+                  width: "100%", height: 380, objectFit: "cover",
+                  objectPosition: sec.img.includes('Sogamoso') ? 'center 80%' : 'center'
+                }}
               />
             </div>
 
