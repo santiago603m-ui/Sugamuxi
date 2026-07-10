@@ -5,19 +5,26 @@ import { ArrowRight, Compass, Camera, Wind, Zap, TreePine, Sunset } from "lucide
 import ParallaxHero from "@/components/ParallaxHero";
 import CascadeText from "@/components/CascadeText";
 import Link from "next/link";
+import { useTranslation } from "@/hooks/useTranslation";
+import { useLanguage } from "@/context/LanguageContext";
 
 import { categories, experiences } from "@/data/experiences";
 
 export default function Experiencias() {
   const [active, setActive] = useState("all");
+  const t = useTranslation();
+  const { lang } = useLanguage();
 
-  const filtered = active === "all" ? experiences : experiences.filter(e => e.cat === active);
+  const localCategories = categories[lang] || categories["es"];
+  const localExperiences = experiences[lang] || experiences["es"];
+
+  const filtered = active === "all" ? localExperiences : localExperiences.filter(e => e.cat === active);
 
   return (
     <div className="page-enter">
 
       {/* Header */}
-      <ParallaxHero src="/assets/paramo/main.jpg" alt="Experiencias en Sugamuxi" height={400}>
+      <ParallaxHero src="/assets/topaga/PanoramicaTopaga.jpg" alt="Experiencias en Sugamuxi" height={400}>
         <div style={{
           position: "absolute", inset: 0,
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
@@ -25,8 +32,8 @@ export default function Experiencias() {
           paddingTop: "var(--nav-height)",
           zIndex: 2,
         }}>
-          <div className="section-label" style={{ justifyContent: "center" }}>Qué hacer en Sugamuxi</div>
-          <CascadeText text="Experiencias Únicas" style={{
+          <div className="section-label" style={{ justifyContent: "center" }}>{t.experiences.heroTitle}</div>
+          <CascadeText text={t.experiences.heroTitle} style={{
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(38px, 6vw, 72px)",
             fontWeight: 900,
@@ -34,7 +41,7 @@ export default function Experiencias() {
             lineHeight: 1.1,
           }} />
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.75)", maxWidth: 480, marginTop: 16 }}>
-            Aventura, cultura, gastronomía y naturaleza en un solo destino andino.
+            {t.experiences.heroSubtitle}
           </p>
         </div>
       </ParallaxHero>
@@ -53,7 +60,7 @@ export default function Experiencias() {
           padding: "12px 32px",
           overflowX: "auto",
         }}>
-          {categories.map(cat => (
+          {localCategories.map(cat => (
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
@@ -93,7 +100,6 @@ export default function Experiencias() {
               >
                 <div className="exp-card-img" style={{ position: "relative", height: 220, overflow: "hidden" }}>
                   <img src={img} alt={title}
-                    loading="lazy"
                     decoding="async"
                     style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.transform = "scale(1.08)"}
@@ -139,23 +145,6 @@ export default function Experiencias() {
                     <span style={{ fontSize: 14, fontWeight: 700, color }}>
                       {price}
                     </span>
-                    <button style={{
-                      display: "flex", alignItems: "center", gap: 6,
-                      padding: "8px 16px",
-                      background: color,
-                      color: "#fff",
-                      borderRadius: "var(--radius-full)",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      border: "none",
-                      cursor: "pointer",
-                      transition: "opacity 0.2s ease",
-                    }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = "0.85"}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = "1"}
-                    >
-                      Reservar
-                    </button>
                   </div>
                 </div>
               </div>
@@ -168,13 +157,13 @@ export default function Experiencias() {
       <section style={{ padding: "64px 0", background: "linear-gradient(135deg, var(--color-tierra) 0%, var(--color-dark) 55%, var(--color-lago) 100%)", textAlign: "center" }}>
         <div className="container">
           <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
-            ¿Quieres una experiencia personalizada?
+            {t.experiences.ctaTitle}
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", marginBottom: 32 }}>
-            Diseñamos itinerarios a la medida de tu grupo y presupuesto.
+            {t.experiences.ctaSubtitle}
           </p>
           <Link href="/contacto" className="btn btn-gold">
-            Contáctanos
+            {t.experiences.ctaBtn}
           </Link>
         </div>
       </section>

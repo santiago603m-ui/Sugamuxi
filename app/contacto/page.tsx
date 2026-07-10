@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function Contacto() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const t = useTranslation();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -58,19 +60,20 @@ export default function Contacto() {
     width: "100%",
   };
 
+  const contactItems = [
+    { icon: MapPin, title: t.contact.infoTitle, text: `Centro de Información Turística\nSogamoso, Boyacá, Colombia` },
+    { icon: Phone, title: "Teléfono", text: "+57 (8) 770 0000\n+57 300 123 4567 (WhatsApp)" },
+    { icon: Mail, title: "Email", text: "info@sugamuxi.gov.co\nturismo@sugamuxi.gov.co" },
+    { icon: Clock, title: t.contact.scheduleTitle, text: t.contact.schedule },
+  ];
+
   return (
     <div className="page-enter">
 
       {/* Header */}
-      <section style={{
-        position: "relative",
-        height: 380,
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-      }}>
+      <section style={{ position: "relative", height: 380, overflow: "hidden", display: "flex", alignItems: "center" }}>
         <img
-          src="https://images.unsplash.com/photo-1542640244-7e672d6cb466?auto=format&fit=crop&q=80&w=2000"
+          src="/assets/sogamoso/PanoramicaSogamoso.jpg"
           alt="Contacto Sugamuxi"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
@@ -78,56 +81,36 @@ export default function Contacto() {
         <div className="container-wide" style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
           <div className="section-label" style={{ justifyContent: "center", color: "var(--color-gold)" }}>Hablemos</div>
           <h1 style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(40px, 6vw, 80px)",
-            fontWeight: 900,
-            color: "#fff",
-            lineHeight: 1.1,
-            marginBottom: 16,
+            fontFamily: "var(--font-serif)", fontSize: "clamp(40px, 6vw, 80px)",
+            fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 16,
           }}>
-            Planifica tu viaje
+            {t.contact.heroTitle}
           </h1>
           <p style={{ fontSize: 17, color: "rgba(255,255,255,0.8)", maxWidth: 560, margin: "0 auto" }}>
-            Contáctanos para organizar tu experiencia en Sugamuxi.
+            {t.contact.heroSubtitle}
           </p>
         </div>
       </section>
 
       {/* Content */}
       <section style={{ padding: "80px 0", background: "var(--color-gray-50)" }}>
-        <div className="container" style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: 64,
-        }}>
+        <div className="container" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64 }}>
+
           {/* Info */}
           <div>
-            <h2 style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 36,
-              fontWeight: 700,
-              color: "var(--color-dark)",
-              marginBottom: 24,
-              lineHeight: 1.2,
-            }}>
-              Información de <br /><span style={{ color: "var(--color-primary)" }}>Contacto</span>
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 700, color: "var(--color-dark)", marginBottom: 24, lineHeight: 1.2 }}>
+              {t.contact.infoTitle} <br /><span style={{ color: "var(--color-primary)" }}>Contacto</span>
             </h2>
             <p style={{ fontSize: 16, color: "var(--color-text-light)", lineHeight: 1.7, marginBottom: 40 }}>
-              Estamos aquí para ayudarte a planificar tu itinerario perfecto, resolver tus dudas sobre transporte, alojamiento o recomendarte los mejores operadores turísticos locales.
+              {t.contact.heroSubtitle}
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-              {[
-                { icon: MapPin, title: "Ubicación",           text: "Centro de Información Turística\nSogamoso, Boyacá, Colombia" },
-                { icon: Phone,  title: "Teléfono",            text: "+57 (8) 770 0000\n+57 300 123 4567 (WhatsApp)" },
-                { icon: Mail,   title: "Correo",              text: "info@sugamuxi.gov.co\nturismo@sugamuxi.gov.co" },
-                { icon: Clock,  title: "Horario de Atención", text: "Lunes a Viernes: 8:00 AM - 6:00 PM\nSábados y Domingos: 9:00 AM - 4:00 PM" },
-              ].map(({ icon: Icon, title, text }) => (
+              {contactItems.map(({ icon: Icon, title, text }) => (
                 <div key={title} style={{ display: "flex", gap: 16 }}>
                   <div style={{
                     width: 48, height: 48, flexShrink: 0,
-                    background: "rgba(30,77,123,0.12)",
-                    borderRadius: "50%",
+                    background: "rgba(30,77,123,0.12)", borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     border: "1px solid rgba(30,77,123,0.20)",
                   }}>
@@ -135,9 +118,7 @@ export default function Contacto() {
                   </div>
                   <div>
                     <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--color-dark)", marginBottom: 8 }}>{title}</h3>
-                    <p style={{ fontSize: 14, color: "var(--color-text-light)", lineHeight: 1.6, whiteSpace: "pre-line" }}>
-                      {text}
-                    </p>
+                    <p style={{ fontSize: 14, color: "var(--color-text-light)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{text}</p>
                   </div>
                 </div>
               ))}
@@ -145,43 +126,21 @@ export default function Contacto() {
           </div>
 
           {/* Form */}
-          <div className="contact-form-box" style={{
-            background: "#fff",
-            padding: 48,
-            borderRadius: "var(--radius-xl)",
-            boxShadow: "var(--shadow-lg)",
-            border: "1px solid var(--color-gray-200)",
-          }}>
+          <div className="contact-form-box" style={{ background: "#fff", padding: 48, borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-lg)", border: "1px solid var(--color-gray-200)" }}>
             <h3 style={{ fontSize: 24, fontWeight: 700, color: "var(--color-dark)", marginBottom: 32 }}>
-              Envíanos un mensaje
+              {t.contact.formTitle}
             </h3>
 
             {/* Success state */}
             {status === "success" && (
-              <div style={{
-                display: "flex", flexDirection: "column", alignItems: "center",
-                gap: 16, padding: "40px 24px", textAlign: "center",
-              }}>
-                <div style={{
-                  width: 72, height: 72, borderRadius: "50%",
-                  background: "rgba(30,77,123,0.12)",
-                  border: "1px solid rgba(30,77,123,0.25)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: "40px 24px", textAlign: "center" }}>
+                <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(30,77,123,0.12)", border: "1px solid rgba(30,77,123,0.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <CheckCircle size={36} color="var(--color-lago-l)" />
                 </div>
-                <h4 style={{ fontSize: 20, fontWeight: 700, color: "var(--color-dark)" }}>
-                  ¡Mensaje enviado!
-                </h4>
-                <p style={{ fontSize: 15, color: "var(--color-text-light)", lineHeight: 1.6 }}>
-                  Gracias por contactarnos. Te responderemos en las próximas 24 horas.
-                </p>
-                <button
-                  onClick={() => setStatus("idle")}
-                  className="btn btn-primary"
-                  style={{ marginTop: 8 }}
-                >
-                  Enviar otro mensaje
+                <h4 style={{ fontSize: 20, fontWeight: 700, color: "var(--color-dark)" }}>{t.contact.successTitle}</h4>
+                <p style={{ fontSize: 15, color: "var(--color-text-light)", lineHeight: 1.6 }}>{t.contact.successMsg}</p>
+                <button onClick={() => setStatus("idle")} className="btn btn-primary" style={{ marginTop: 8 }}>
+                  {t.contact.send}
                 </button>
               </div>
             )}
@@ -189,15 +148,8 @@ export default function Contacto() {
             {/* Form fields */}
             {status !== "success" && (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-
-                {/* Error banner */}
                 {status === "error" && (
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: 10,
-                    padding: "12px 16px", borderRadius: "var(--radius-md)",
-                    background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.25)",
-                    color: "#dc2626", fontSize: 14,
-                  }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", borderRadius: "var(--radius-md)", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.25)", color: "#dc2626", fontSize: 14 }}>
                     <AlertCircle size={18} style={{ flexShrink: 0 }} />
                     {errorMessage}
                   </div>
@@ -205,59 +157,39 @@ export default function Contacto() {
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
-                    Nombre completo <span style={{ color: "#dc2626" }}>*</span>
+                    {t.contact.name} <span style={{ color: "#dc2626" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Tu nombre"
-                    required
-                    style={inputStyle}
+                  <input type="text" name="name" placeholder={t.contact.name} required style={inputStyle}
                     onFocus={e => e.target.style.borderColor = "var(--color-lago-l)"}
-                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                  />
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"} />
                 </div>
 
                 <div className="contact-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
-                      Email <span style={{ color: "#dc2626" }}>*</span>
+                      {t.contact.email} <span style={{ color: "#dc2626" }}>*</span>
                     </label>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Tu correo"
-                      required
-                      style={inputStyle}
+                    <input type="email" name="email" placeholder={t.contact.email} required style={inputStyle}
                       onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                    />
+                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
-                      Teléfono
+                      {t.contact.phone}
                     </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Tu número (opcional)"
-                      style={inputStyle}
+                    <input type="tel" name="phone" placeholder={t.contact.phone} style={inputStyle}
                       onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                    />
+                      onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"} />
                   </div>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
-                    Motivo del viaje
+                    {t.contact.interest}
                   </label>
-                  <select
-                    name="motivo"
-                    style={{ ...inputStyle }}
+                  <select name="motivo" style={{ ...inputStyle }}
                     onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                  >
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}>
                     <option>Turismo y vacaciones</option>
                     <option>Ecoturismo y aventura</option>
                     <option>Turismo cultural</option>
@@ -268,41 +200,23 @@ export default function Contacto() {
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text)", marginLeft: 4 }}>
-                    Mensaje <span style={{ color: "#dc2626" }}>*</span>
+                    {t.contact.message} <span style={{ color: "#dc2626" }}>*</span>
                   </label>
-                  <textarea
-                    name="message"
-                    placeholder="¿Cómo podemos ayudarte?"
-                    rows={4}
-                    required
+                  <textarea name="message" placeholder={t.contact.messagePlaceholder} rows={4} required
                     style={{ ...inputStyle, resize: "vertical" }}
                     onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
-                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"}
-                  />
+                    onBlur={e => e.target.style.borderColor = "var(--color-gray-200)"} />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="btn btn-primary"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    marginTop: 16,
-                    padding: "16px",
-                    opacity: status === "loading" ? 0.75 : 1,
-                    cursor: status === "loading" ? "not-allowed" : "pointer",
-                  }}
-                >
+                <button type="submit" disabled={status === "loading"} className="btn btn-primary" style={{
+                  width: "100%", justifyContent: "center", marginTop: 16, padding: "16px",
+                  opacity: status === "loading" ? 0.75 : 1,
+                  cursor: status === "loading" ? "not-allowed" : "pointer",
+                }}>
                   {status === "loading" ? (
-                    <>
-                      <Loader size={16} style={{ animation: "spin-slow 1s linear infinite" }} />
-                      Enviando…
-                    </>
+                    <><Loader size={16} style={{ animation: "spin-slow 1s linear infinite" }} /> {t.contact.sending}</>
                   ) : (
-                    <>
-                      Enviar mensaje <Send size={16} />
-                    </>
+                    <>{t.contact.send} <Send size={16} /></>
                   )}
                 </button>
               </form>

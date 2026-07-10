@@ -3,11 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MapPin, Map } from "lucide-react";
-
-import { highlights, stats, homeExperiences as experiences } from "@/data/home";
+import { useLanguage } from "@/context/LanguageContext";
+import { highlights as highlightsData, stats as statsData, homeExperiences as experiencesData } from "@/data/home";
 import ScrollReveal from "@/components/ScrollReveal";
 import MountainDivider from "@/components/MountainDivider";
 import CascadeText from "@/components/CascadeText";
+import { useTranslation } from "@/hooks/useTranslation";
 
 function useCountUp(end: number, duration: number = 2000) {
   const [count, setCount] = useState(0);
@@ -88,7 +89,7 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href={`/destinos/${dest.slug}`} style={{ textDecoration: "none", display: "block" }}>
+    <div style={{ textDecoration: "none", display: "block" }}>
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -112,8 +113,6 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
           <img
             src={dest.img}
             alt={dest.name}
-            loading="lazy"
-            decoding="async"
             style={{
               width: "100%",
               height: "100%",
@@ -191,15 +190,15 @@ function HighlightCard({ dest, index }: { dest: any, index: number }) {
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
-const topLugares = [
-  { name: "Playa Blanca", loc: "Lago de Tota", img: "/assets/lago_tota/main.jpg", color: "#1E4D7B" },
-  { name: "Páramo de Ocetá", loc: "Monguí", img: "/assets/paramo/main.jpg", color: "#3A6B2A" },
-  { name: "Templo del Sol", loc: "Sogamoso", img: "/assets/templo_sol/main.jpg", color: "#C9963A" },
-  { name: "Páramo de Siscunsí", loc: "Mongua", img: "/assets/mongua/main.jpg", color: "#6B1A2A" },
+const getTopLugares = (lang: string) => [
+  { name: "Playa Blanca", loc: "Tota", img: "/assets/PlayaBlanca.jpg", color: "#1E4D7B" },
+  { name: "Parque Guaitika", loc: "Tibasosa", img: "/assets/tibasosa/Guatika.jpg", color: "#C9963A" },
+  { name: "Páramo de Ocetá", loc: "Monguí", img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Paramo_de_Oceta.JPG", color: "#3A6B2A" },
+  { name: lang === "en" ? "Siscunsí Paramo" : "Páramo de Siscunsí", loc: "Sogamoso", img: "/assets/sogamoso/ParamoSiscunsi.jpg", color: "#6B1A2A" },
 ];
 
 function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
@@ -224,8 +223,6 @@ function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
       <img
         src={lugar.img}
         alt={lugar.name}
-        loading="lazy"
-        decoding="async"
         style={{
           width: "100%",
           height: "100%",
@@ -272,7 +269,13 @@ function DestacadoCard({ lugar, index }: { lugar: any, index: number }) {
 }
 
 export default function Home() {
-  const heroImg = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2400";
+  const heroImg = "/assets/iza/PanoramicaIza.jpg";
+  const t = useTranslation();
+  const { lang } = useLanguage();
+
+  const highlights = highlightsData[lang] || highlightsData["es"];
+  const stats = statsData[lang] || statsData["es"];
+  const experiences = experiencesData[lang] || experiencesData["es"];
 
   return (
     <div className="page-enter">
@@ -335,7 +338,7 @@ export default function Home() {
                 userSelect: "none",
                 pointerEvents: "none",
               }}>
-                Provincia de<br/>
+                Provincia de<br />
                 Sugamuxi
               </h1>
               <h1 style={{
@@ -353,7 +356,7 @@ export default function Home() {
                 WebkitTextFillColor: "transparent",
                 animation: "shimmerBackground 25s linear infinite",
               }}>
-                Provincia de<br/>
+                Provincia de<br />
                 Sugamuxi
               </h1>
             </div>
@@ -365,7 +368,7 @@ export default function Home() {
               margin: "0 auto 48px",
               lineHeight: 1.6,
             }}>
-              Descubre el secreto mejor guardado de los Andes: Naturaleza, historia y aventura en su máxima expresión
+              {t.home.heroSubtitle}
             </p>
 
             <div className="hero-btn-group" style={{
@@ -382,7 +385,7 @@ export default function Home() {
                   gap: 8,
                 }}
               >
-                Explorar Destinos
+                {t.home.heroBtnExplore}
               </Link>
               <Link
                 href="/experiencias"
@@ -396,7 +399,7 @@ export default function Home() {
                   gap: 8,
                 }}
               >
-                Ver Experiencias
+                {t.home.heroBtnExp}
               </Link>
             </div>
 
@@ -428,7 +431,7 @@ export default function Home() {
         <div className="container-wide">
           <ScrollReveal direction="up">
             <div style={{ textAlign: "center", marginBottom: 64 }}>
-              <div className="section-label" style={{ justifyContent: "center" }}>Nuestros destinos</div>
+              <div className="section-label" style={{ justifyContent: "center" }}>{t.home.destinationsLabel}</div>
               <h2 style={{
                 fontFamily: "var(--font-serif)",
                 fontSize: "clamp(36px, 4vw, 56px)",
@@ -436,13 +439,13 @@ export default function Home() {
                 color: "var(--color-dark)",
                 lineHeight: 1.2,
               }}>
-                Escenarios mágicos que
+                {t.home.destinationsTitle1}
                 <span style={{
                   background: "linear-gradient(90deg, var(--color-primary), var(--color-lago))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   display: "block"
-                }}>robarán tu aliento</span>
+                }}>{t.home.destinationsTitle2}</span>
               </h2>
             </div>
           </ScrollReveal>
@@ -471,32 +474,32 @@ export default function Home() {
         <div className="container-wide">
           <ScrollReveal direction="up">
             <div style={{ textAlign: "center", marginBottom: 64 }}>
-              <div className="section-label" style={{ justifyContent: "center" }}>Imperdibles</div>
-            <h2 style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(36px, 4vw, 56px)",
-              fontWeight: 700,
-              color: "var(--color-dark)",
-              lineHeight: 1.2,
-            }}>
-              Los sitios más
-              <span style={{
-                background: "linear-gradient(90deg, var(--color-gold-l), var(--color-tierra-l))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                display: "block"
-              }}>icónicos y visitados</span>
-            </h2>
-            <p style={{
-              fontSize: "clamp(16px, 2vw, 18px)",
-              color: "var(--color-text-light)",
-              maxWidth: 600,
-              margin: "24px auto 0",
-              lineHeight: 1.6,
-            }}>
-              Maravillas naturales que no pueden faltar en tu itinerario cuando visites la Provincia de Sugamuxi.
-            </p>
-          </div>
+              <div className="section-label" style={{ justifyContent: "center" }}>{t.home.topLabel}</div>
+              <h2 style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(36px, 4vw, 56px)",
+                fontWeight: 700,
+                color: "var(--color-dark)",
+                lineHeight: 1.2,
+              }}>
+                {t.home.topTitle1}
+                <span style={{
+                  background: "linear-gradient(90deg, var(--color-gold-l), var(--color-tierra-l))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "block"
+                }}>{t.home.topTitle2}</span>
+              </h2>
+              <p style={{
+                fontSize: "clamp(16px, 2vw, 18px)",
+                color: "var(--color-text-light)",
+                maxWidth: 600,
+                margin: "24px auto 0",
+                lineHeight: 1.6,
+              }}>
+                {t.home.topSubtitle}
+              </p>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
@@ -505,7 +508,7 @@ export default function Home() {
               gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
               gap: 32,
             }}>
-              {topLugares.map((lugar, i) => (
+              {getTopLugares(lang).map((lugar, i) => (
                 <DestacadoCard key={lugar.name} lugar={lugar} index={i} />
               ))}
             </div>
@@ -604,7 +607,7 @@ export default function Home() {
                   animation: "pulse 1.5s ease-in-out infinite",
                   display: "inline-block",
                 }} />
-                Próximamente
+                {t.home.mapLabel}
               </span>
             </div>
 
@@ -616,7 +619,7 @@ export default function Home() {
               lineHeight: 1.15,
               marginBottom: 48,
             }}>
-              Mapa Interactivo de
+              {t.home.mapTitle1}
               <br />
               <span style={{
                 background: "linear-gradient(90deg, var(--color-lago-xl), var(--color-gold-xl), var(--color-primary-xl), var(--color-lago-xl))",
@@ -625,84 +628,84 @@ export default function Home() {
                 WebkitTextFillColor: "transparent",
                 animation: "shimmer 4s linear infinite",
               }}>
-                Sugamuxi
+                {t.home.mapTitle2}
               </span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal direction="scale" delay={400}>
 
-          <div style={{
-            position: "relative",
-            maxWidth: 800,
-            margin: "0 auto",
-            borderRadius: "var(--radius-xl)",
-            overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
-          }}>
-            <div className="map-placeholder" style={{
-              height: 320,
-              background: "linear-gradient(135deg, #0d1e30 0%, #0d1520 30%, #1a0e1a 60%, #0d2018 100%)",
+            <div style={{
               position: "relative",
+              maxWidth: 800,
+              margin: "0 auto",
+              borderRadius: "var(--radius-xl)",
               overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
             }}>
-              {[...Array(8)].map((_, i) => (
-                <div key={i} style={{
-                  position: "absolute",
-                  borderRadius: "50%",
-                  background: i % 3 === 0 ? "rgba(196,137,90,0.28)" : i % 3 === 1 ? "rgba(74,142,194,0.18)" : "rgba(107,175,74,0.15)",
-                  width: 30 + (i * 17 % 50), height: 30 + (i * 17 % 50),
-                  left: `${8 + (i * 19) % 80}%`,
-                  top: `${12 + (i * 29) % 70}%`,
-                  filter: "blur(4px)",
-                  animation: `float ${4 + i % 3}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.4}s`,
-                }} />
-              ))}
+              <div className="map-placeholder" style={{
+                height: 320,
+                background: "linear-gradient(135deg, #0d1e30 0%, #0d1520 30%, #1a0e1a 60%, #0d2018 100%)",
+                position: "relative",
+                overflow: "hidden",
+              }}>
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} style={{
+                    position: "absolute",
+                    borderRadius: "50%",
+                    background: i % 3 === 0 ? "rgba(196,137,90,0.28)" : i % 3 === 1 ? "rgba(74,142,194,0.18)" : "rgba(107,175,74,0.15)",
+                    width: 30 + (i * 17 % 50), height: 30 + (i * 17 % 50),
+                    left: `${8 + (i * 19) % 80}%`,
+                    top: `${12 + (i * 29) % 70}%`,
+                    filter: "blur(4px)",
+                    animation: `float ${4 + i % 3}s ease-in-out infinite`,
+                    animationDelay: `${i * 0.4}s`,
+                  }} />
+                ))}
 
-              {[
-                { x: "25%", y: "35%", c: "var(--color-lago-xl)" },
-                { x: "55%", y: "25%", c: "var(--color-gold-xl)" },
-                { x: "70%", y: "55%", c: "var(--color-primary-xl)" },
-                { x: "38%", y: "65%", c: "var(--color-tierra-l)" },
-              ].map((pos, i) => (
-                <div key={i} style={{
-                  position: "absolute",
-                  left: pos.x, top: pos.y,
-                  transform: "translate(-50%, -50%)",
+                {[
+                  { x: "25%", y: "35%", c: "var(--color-lago-xl)" },
+                  { x: "55%", y: "25%", c: "var(--color-gold-xl)" },
+                  { x: "70%", y: "55%", c: "var(--color-primary-xl)" },
+                  { x: "38%", y: "65%", c: "var(--color-tierra-l)" },
+                ].map((pos, i) => (
+                  <div key={i} style={{
+                    position: "absolute",
+                    left: pos.x, top: pos.y,
+                    transform: "translate(-50%, -50%)",
+                  }}>
+                    <div style={{
+                      width: 10, height: 10,
+                      background: pos.c,
+                      borderRadius: "50%",
+                      boxShadow: `0 0 0 3px ${pos.c}33`,
+                      animation: `pulse-ring 2s ease-out infinite`,
+                      animationDelay: `${i * 0.5}s`,
+                    }} />
+                  </div>
+                ))}
+
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to bottom, transparent 30%, rgba(13,21,32,0.92) 100%)",
+                  display: "flex", alignItems: "flex-end", justifyContent: "center",
+                  paddingBottom: 24,
                 }}>
                   <div style={{
-                    width: 10, height: 10,
-                    background: pos.c,
-                    borderRadius: "50%",
-                    boxShadow: `0 0 0 3px ${pos.c}33`,
-                    animation: `pulse-ring 2s ease-out infinite`,
-                    animationDelay: `${i * 0.5}s`,
-                  }} />
-                </div>
-              ))}
-
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "linear-gradient(to bottom, transparent 30%, rgba(13,21,32,0.92) 100%)",
-                display: "flex", alignItems: "flex-end", justifyContent: "center",
-                paddingBottom: 24,
-              }}>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: 8,
-                  padding: "10px 24px",
-                  background: "rgba(30,77,123,0.15)",
-                  backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(74,142,194,0.25)",
-                  borderRadius: "var(--radius-full)",
-                }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--color-lago-xl)", animation: "pulse 1.5s ease-in-out infinite" }} />
-                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>Mapa en desarrollo · Primera fase activa</span>
+                    display: "flex", alignItems: "center", gap: 8,
+                    padding: "10px 24px",
+                    background: "rgba(30,77,123,0.15)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(74,142,194,0.25)",
+                    borderRadius: "var(--radius-full)",
+                  }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--color-lago-xl)", animation: "pulse 1.5s ease-in-out infinite" }} />
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>{t.home.mapDev}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </ScrollReveal>
         </div>
       </section>
@@ -715,7 +718,7 @@ export default function Home() {
         <div className="container-wide">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 64, flexWrap: "wrap", gap: 24 }}>
             <div>
-              <div className="section-label">Qué hacer</div>
+              <div className="section-label">{t.home.expLabel}</div>
               <h2 style={{
                 fontFamily: "var(--font-serif)",
                 fontSize: "clamp(32px, 4vw, 48px)",
@@ -723,13 +726,13 @@ export default function Home() {
                 color: "var(--color-dark)",
                 lineHeight: 1.2,
               }}>
-                Aventuras que
+                {t.home.expTitle1}
                 <span style={{
                   background: "linear-gradient(90deg, var(--color-primary-l), var(--color-lago-l))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   display: "block"
-                }}>despertarán tu espíritu</span>
+                }}>{t.home.expTitle2}</span>
               </h2>
             </div>
 
@@ -827,7 +830,7 @@ export default function Home() {
         background: "linear-gradient(135deg, var(--color-tierra) 0%, var(--color-dark) 50%, var(--color-lago) 100%)",
       }}>
         <img
-          src="/assets/paramo/main.jpg"
+          src="/assets/mongua/PanoramicaMongua.jpg"
           alt="CTA background"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
           onError={(e) => {
@@ -837,7 +840,7 @@ export default function Home() {
         <div style={{ position: "absolute", inset: 0, background: "rgba(13,21,32,0.82)" }} />
 
         <div className="container-wide" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-          <div className="section-label" style={{ justifyContent: "center" }}>¿Listo para explorar?</div>
+          <div className="section-label" style={{ justifyContent: "center" }}>{t.home.ctaLabel}</div>
           <h2 style={{
             fontFamily: "var(--font-serif)",
             fontSize: "clamp(32px, 5vw, 64px)",
@@ -846,10 +849,10 @@ export default function Home() {
             marginBottom: 20,
             lineHeight: 1.2,
           }}>
-            Despierta tu espíritu aventurero.<br />Tu viaje inolvidable comienza aquí
+            {t.home.ctaTitle.split("\n")[0]}<br />{t.home.ctaTitle.split("\n")[1]}
           </h2>
           <p style={{ fontSize: 18, color: "rgba(255,255,255,0.85)", marginBottom: 40 }}>
-            Descubre paisajes épicos y conecta con la magia de nuestros destinos locales
+            {t.home.ctaSubtitle}
           </p>
           <div className="hero-btn-group" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
@@ -862,14 +865,14 @@ export default function Home() {
                 gap: 8,
               }}
             >
-              Planifica tu viaje
+              {t.home.ctaBtnPlan}
             </Link>
             <Link
               href="/destinos"
               className="btn btn-outline"
               style={{ fontSize: 16 }}
             >
-              Ver destinos
+              {t.home.ctaBtnDest}
             </Link>
           </div>
         </div>
