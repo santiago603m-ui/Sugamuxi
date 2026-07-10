@@ -18,7 +18,7 @@ export default function Contacto() {
 
     const formData = new FormData(e.currentTarget);
     formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "c5589439-1221-49c6-8902-328642736052");
-    formData.append("subject", "Nueva consulta desde Sugamuxi.gov.co");
+    formData.append("subject", "Nueva consulta desde sugamuxi.vercel.app");
     formData.append("from_name", "Provincia de Sugamuxi");
 
     try {
