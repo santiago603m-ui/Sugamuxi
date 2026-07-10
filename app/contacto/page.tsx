@@ -17,22 +17,14 @@ export default function Contacto() {
     setErrorMessage("");
 
     const formData = new FormData(e.currentTarget);
-    const data = {
-      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "c5589439-1221-49c6-8902-328642736052",
-      subject: "Nueva consulta desde Sugamuxi.gov.co",
-      from_name: "Provincia de Sugamuxi",
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      motivo: formData.get("motivo"),
-      message: formData.get("message"),
-    };
+    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "c5589439-1221-49c6-8902-328642736052");
+    formData.append("subject", "Nueva consulta desde Sugamuxi.gov.co");
+    formData.append("from_name", "Provincia de Sugamuxi");
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data),
+        body: formData,
       });
       const result = await res.json();
       if (result.success) {
